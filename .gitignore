@@ -1,4 +1,15 @@
-
+# Internet stuff
+.htaccess
 robots.txt
-
 sitemap.txt
+
+# OS X
+/.DS_Store
+
+# Eclipse
+/.classpath
+/.project
+/.settings
+
+# Netbeans
+/nbproject
