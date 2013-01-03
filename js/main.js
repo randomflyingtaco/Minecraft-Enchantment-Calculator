@@ -1,129 +1,152 @@
-//GOOGLE +1
+// FIXME: Check this works when depolyed
+/*// GOOGLE +1
 (function() {
 	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
 	po.src = 'https://apis.google.com/js/plusone.js';
 	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();
+})();*/
 
-var currentEnchType;
+// TODO: move functions out of the onPageLoad function
+// TODO: clean up code placement
 
 $(function() {
+    // Google +1 init
+    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	po.src = 'https://apis.google.com/js/plusone.js';
+	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+
+    // Cufon init for font antialiasing 
 	Cufon.now();
 	Cufon.replace($("#title"));
 	Cufon.replace($("#normal_calc"));
 	Cufon.replace($("#or"));
 	Cufon.replace($("#reverse_calc"));
 	Cufon.replace($("#result"));
+	
+	// MEC variables
+	var currentEnchType;
 
-	$("#material").change(function(){
+	/*
+        
+        Function called when the main calculator's material is changed, keeps tools and materials valid
+        
+    */
+    $("#material").change(function(){
 		var mat = $("#material").val();
 		var tool = $("#tool").val();
 		
-		//check for bow
-		if (tool == "bow" && mat != "wood") {
+		if (tool == "bow" && mat != "wood") {  // Check for bow
 			if (mat == "leather" || mat == "chain") {
 				$("#tool").val("chestplate");
 			} else {
 				$("#tool").val("sword");
 			}
-		}
-		
-		//check for armour
-		if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {
+		} else if (tool == "book" && mat != "book") {  // Check for book as tool
+			if (mat == "leather" || mat == "chain") {
+				$("#tool").val("chestplate");
+			} else {
+				$("#tool").val("sword");
+			}
+		} else if (mat == "book" && tool != "book") {  // Check for book as material
+			$("#tool").val("book");
+		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
 			$("#tool").val("sword");
-		}
-		
-		//check for tools
-		if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {
+		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
 			$("#tool").val("chestplate");
 		}
 	});
 	
-	
-	$("#tool").change(function(){
+	/*
+        
+        Function called when the main calculator's tool is changed, keeps tools and materials valid
+        
+    */
+    $("#tool").change(function(){
 		var mat = $("#material").val();
 		var tool = $("#tool").val();
 		
-		//check for bow
-		if (tool == "bow" && mat != "wood") {
+		if (tool == "bow" && mat != "wood") {  // Check for bow
 			$("#material").val("wood");
-		}
-		
-		//check for armour
-		if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {
+		} else if (tool == "book" && mat != "book") {  // Check for book
+			$("#material").val("book");
+		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
 			$("#material").val("diamond");
-		}
-		
-		//check for tools
-		if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {
+		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
 			$("#material").val("diamond");
 		}
 	});
     
+    /*
+        
+        Function called when the 2nd calculator's material is changed, keeps tools and materials valid
+        
+    */
     $("#revmaterial").change(function(){
 		var mat = $("#revmaterial").val();
 		var tool = $("#revtool").val();
-		//(mat == "wood" || mat == "stone" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "leather" || mat == "chain")
-		//(tool == "axe" || tool == "boots" || tool == "bow" || tool == "chestplate" || tool == "helmet" || tool == "leggings" || tool == "pickaxe" || tool == "shovel" || tool == "sword")
 		
-		//check for bow
-		if (tool == "bow" && mat != "wood") {
+		if (tool == "bow" && mat != "wood") {  // Check for bow
 			if (mat == "leather" || mat == "chain") {
 				$("#revtool").val("chestplate");
 			} else {
 				$("#revtool").val("sword");
 			}
-		}
-		
-		//check for armour
-		if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {
+		} else if (tool == "book" && mat != "book") {  // Check for book as tool
+			if (mat == "leather" || mat == "chain") {
+				$("#revtool").val("chestplate");
+			} else {
+				$("#revtool").val("sword");
+			}
+		} else if (mat == "book" && tool != "book") {  // Check for book as material
+			$("#tool").val("book");
+		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
 			$("#revtool").val("sword");
-		}
-		
-		//check for tools
-		if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {
+		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
 			$("#revtool").val("chestplate");
 		}
 		
+		// Change enchantment type depending on weapon
+		// TODO: make a function for this
 		tool = $("#revtool").val();
 		
 		if (tool == "bow") {
 			changeEnchType ("bow");
 		} else if (tool == "sword") {
-			changeEnchType ("sword")
+			changeEnchType ("sword");
 		} else if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
-			changeEnchType ("tool")
+			changeEnchType ("tool");
 		} else if (tool == "chestplate" || tool == "leggings") {
-			changeEnchType ("armour")
+			changeEnchType ("armour");
 		} else if (tool == "boots") {
-			changeEnchType ("boots")
+			changeEnchType ("boots");
 		} else if (tool == "helmet") {
-			changeEnchType ("helmet")
+			changeEnchType ("helmet");
+		} else if (tool == "book") {
+    		changeEnchType ("book");
 		}
 	});
 	
-	
-	$("#revtool").change(function(){
+	/*
+        
+        Function called when the 2nd calculator's tool is changed, keeps tools and materials valid
+        
+    */
+    $("#revtool").change(function(){
 		var mat = $("#revmaterial").val();
 		var tool = $("#revtool").val();
-		//(mat == "wood" || mat == "stone" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "leather" || mat == "chain")
-		//(tool == "axe" || tool == "boots" || tool == "bow" || tool == "chestplate" || tool == "helmet" || tool == "leggings" || tool == "pickaxe" || tool == "shovel" || tool == "sword")
 		
-		//check for bow
-		if (tool == "bow" && mat != "wood") {
+		if (tool == "bow" && mat != "wood") {  // Check for bow
 			$("#revmaterial").val("wood");
-		}
-		
-		//check for armour
-		if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {
+		} else if (tool == "book" && mat != "book") {  // Check for book
+			$("#material").val("book");
+		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
+			$("#revmaterial").val("diamond");
+		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
 			$("#revmaterial").val("diamond");
 		}
 		
-		//check for tools
-		if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {
-			$("#revmaterial").val("diamond");
-		}
-		
+		// Change enchanting type depending on weapon
+		// TODO: remove this when I make the function above
 		if (tool == "bow") {
 			changeEnchType ("bow");
 		} else if (tool == "sword") {
@@ -136,9 +159,16 @@ $(function() {
 			changeEnchType ("boots")
 		} else if (tool == "helmet") {
 			changeEnchType ("helmet")
+		} else if (tool == "book") {
+    		changeEnchType ("book");
 		}
 	});
     
+    /*
+    
+        Function called while typing in a level, ensures input is a number between 1 and 30
+    
+    */
     $("#level").keyup(function(){
     	$("#level").val($("#level").val().replace(/[^0-9]/g,''));
 	    if (parseInt($("#level").val()) > 30) {
@@ -148,20 +178,55 @@ $(function() {
 	    }
     });
     
+    /*
+    
+        Function changes the enchant levels whenever a different enchant is chosen
+    
+    */
     $("#enchant").change(function() {
 	    changeEnchLevels();
     });
     
+    /*
+    
+        Updates enchants listed depending on type of tool or armour
+    
+    */
+    //TODO: change to updateEnchType, remove the need for arguments
     function changeEnchType (newEnchType) {
 	    if (newEnchType == currentEnchType) {
-		    return;
+		    return;  // Stops the browser from resetting values whenever a different piece of armour with the same enchant is chosen
 	    } else {
 		    currentEnchType == newEnchType;
 	    }
 	    
 	    var newOptions;
 	    
-	    if (newEnchType == "sword") {
+	    if (newEnchType == "book") {
+    	    newOptions = {
+			  "Aqua Affinity": "aquaaffinity",
+			  "Bane of Arthropods": "boa",
+			  "Blast Protection": "blastprot",
+			  "Efficiency": "efficiency",
+			  "Feather Falling": "featherfalling"
+			  "Fire Aspect": "fireaspect",
+			  "Fire Protection": "fireprot",
+			  "Flame": "flame",
+			  "Fortune": "fortune",
+			  "Infinity": "infinity",
+			  "Knockback": "knockback",
+			  "Looting": "looting",
+			  "Power": "power",
+			  "Projectile Protection": "projprot",
+			  "Protection": "protection",
+			  "Punch": "punch",
+			  "Respiration": "respiration",
+    	      "Sharpness": "sharpness",
+			  "Silk Touch": "silktouch",
+			  "Smite": "smite",
+			  "Unbreaking": "unbreaking",
+			};
+	    } else if (newEnchType == "sword") {
 		    newOptions = {"Sharpness": "sharpness",
 			  "Smite": "smite",
 			  "Bane of Arthropods": "boa",
@@ -204,6 +269,7 @@ $(function() {
 			};
 	    }
 	    
+	    // Applies new key value pairs to the list of enchants
 	    var $el = $("#enchant");
 		$el.empty();
 		$.each(newOptions, function(key, value) {
@@ -211,15 +277,20 @@ $(function() {
 		     .attr("value", value).text(key));
 		});
 		
-		changeEnchLevels();
+		changeEnchLevels();  // Updates newly selected enchant's possible levels
     }
     
+    /*
+    
+        Updates min and max levels depending on the currently selected enchant
+    
+    */
     function changeEnchLevels() {
 	    var enchName = $("#enchant").val();
 	    var newLvOptions;
 	    
 	    if (enchName == "sharpness" || enchName == "smite" || enchName == "boa" || enchName == "efficiency" || enchName == "power") {
-		    newLvOptions = {"IV": "4",
+		    newLvOptions = {"IV": "4",  // 4 before 5, because 5 is impossible to get on anything useful
 			  "V": "5",
 			  "III": "3",
 			  "II": "2",
@@ -242,10 +313,9 @@ $(function() {
 			};
 	    } else if (enchName == "flame" || enchName == "infinity" || enchName == "silktouch" || enchName == "aquaaffinity") {
 		    newLvOptions = {"I": "1"};
-	    } else {
-		    newLvOptions = {"Error": "1"};
 	    }
 	    
+	    // Applies the new key value pairs to the list of levels
 	    var $el = $("#enchlevel");
 		$el.empty();
 		$.each(newLvOptions, function(key, value) {
@@ -254,8 +324,15 @@ $(function() {
 		});
     }
     
+    // Sets the default enchant type to sword
+    // TODO: Move this somewhere useful, or just remove it all together
     changeEnchType ("sword");
     
+    /*
+    
+        When the user clicks the calculate button
+    
+    */
     $("#calc").click(function(){
 		$("#main_window").css("border-bottom", "solid 1px #aaaaaa");
 		$("#result").css("border-top", "solid 1px #eeeeee");
@@ -267,13 +344,14 @@ $(function() {
 	    }, 500, function() {
 		    $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
 			$("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(1));
-			calc($("#material").val(), $("#tool").val(), $("#level").val())
-			Cufon.refresh();
-			$("#link").click(function(){$("#link")[0].select();});
+			calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
+			Cufon.refresh();  // Refresh text smoothing for new text
+			$("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
 		    $("#result").animate({
 			    height: "300px"
 		    }, 500, function() {
-			    $("#calcback").click(function(){
+			    $("#calcback").click(function(){  // Close the result when the user clicks back
+    			    // TODO: Move this to its own function, same function for both back buttons on either calculator
 				    $("#main_window").css("border-bottom", "none");
 				    $("#result").css("border-top", "none");
 				    $("#result").animate({
@@ -292,6 +370,11 @@ $(function() {
 	    });
     });
     
+    /*
+    
+        Calculate button click for 2nd calculator
+    
+    */
     $("#revcalc").click(function(){
 		$("#main_window").css("border-bottom", "solid 1px #aaaaaa");
 		$("#result").css("border-top", "solid 1px #eeeeee");
@@ -303,13 +386,14 @@ $(function() {
 	    }, 500, function() {
 		    $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
 			$("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(2));
-			revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());
-			$("#link").click(function(){$("#link")[0].select();});
-			Cufon.refresh();
+			revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
+			$("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
+			Cufon.refresh();  // Refresh text smoothing for new text
 		    $("#result").animate({
 			    height: "300px"
 		    }, 500, function() {
-			    $("#calcback").click(function(){
+			    $("#calcback").click(function(){  // Close the result when the user clicks back
+    			    // TODO: Move this to its own function, same function for both back buttons on either calculator
 				    $("#main_window").css("border-bottom", "none");
 				    $("#result").css("border-top", "none");
 				    $("#result").animate({
@@ -328,7 +412,13 @@ $(function() {
 	    });
     });
     
+    /*
+    
+        Creates a quick code for use in the link text box under results
+    
+    */
     function getQuickCode(type) {
+        // Type 1 is normal calculator, 2 is the 2nd calculator
 	    if (type == 1) {
 		    return "1" + $("#material")[0].selectedIndex + $("#tool")[0].selectedIndex + $("#level").val();
 	    } else if (type == 2) {
@@ -336,6 +426,11 @@ $(function() {
 	    }
     }
     
+    /*
+    
+        Handles quick codes if the url contains one
+    
+    */
     if (window.location.hash.replace("#", "") != "") {
     	var quickCode = window.location.hash.replace("#", "");
 	    if (quickCode.charAt(0) == "1") {
@@ -370,10 +465,17 @@ $(function() {
     }
 });
 
+/*
+
+    Writes a line to the result output
+
+*/
 function writeLineToOutput (s) {
 	$("#outputArea").val($("#outputArea").val() + s + "\n");
 }
 
+// TODO: Move these somewhere useful
+// Calculation variables
 var enchantability;
 var modifiedLevel;
 var possibleEnchants = new Array();
@@ -383,10 +485,16 @@ var isRecordingEnchants = false;
 var enchantWanted;
 var recordedEnchant = new Object();
 
+/*
+
+    Main calculator, calculates possible enchants for a specific tool at a specific level
+
+*/
 function calc(mat, tool, level) {
 	enchantsReceived = new Object();
 	
-	if (tool == "bow") {
+	// Set enchantability value of each tool
+	if (tool == "bow" || tool == "book") {
 		enchantability = 1;
 	} else if (tool == "axe" || tool == "pickaxe" || tool == "shovel" || tool == "sword") {
 		if (mat == "wood") {
@@ -400,7 +508,7 @@ function calc(mat, tool, level) {
 		} else if (mat == "gold") {
 			enchantability = 22;
 		}
-	} else {
+    } else if (tool == "leggings" || tool == "boots" || tool == "chestplate" || tool == "helmet") {
 		if (mat == "leather") {
 			enchantability = 15;
 		} else if (mat == "iron") {
@@ -414,16 +522,19 @@ function calc(mat, tool, level) {
 		}
 	}
 	
+	// Calculator runs 10,000 times currently (depending on precision value, higher takes longer and sometimes doesn't even finish), works out the average chance for each enchant
 	for (var i = 0; i < precision; i++) {
 		possibleEnchants = new Array();
 		
+		// Randomisation which actually picks the enchant
 		modifiedLevel = parseInt(level) + Math.floor(Math.random() * (enchantability / 4 + 1)) + Math.floor(Math.random() * (enchantability / 4 + 1)) + 1;
 		modifiedLevel = Math.floor(modifiedLevel * ((Math.random() + Math.random() - 1) * 0.15 + 1) + 0.5);
 		
+		// Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
+		// TODO: (IMPORTANT) research if removing the else ifs would increase the calculator's precision
 		if (tool == "bow") {
 			if (modifiedLevel >= 41 && modifiedLevel <= 56) {
 				addWeights(10, "Power V");
-				//add this enchant [enchantment weight]times to an array, then choose randomly from array
 			} else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
 				addWeights(10, "Power IV");
 			} else if (modifiedLevel >= 21 && modifiedLevel <= 36) {
@@ -566,6 +677,7 @@ function calc(mat, tool, level) {
 				addWeights(5, "Projectile Protection I");
 			}
 			
+			// Extra enchants for boots and helmets
 			if (tool == "boots") {
 				if (modifiedLevel >= 23 && modifiedLevel <= 33) {
 					addWeights(5, "Feather Falling IV");
@@ -591,8 +703,11 @@ function calc(mat, tool, level) {
 					addWeights(2, "Aqua Affinity I");
 				}
 			}
+		} else if (tool == "book") {
+    		// TODO: add weights for every single enchant here
 		}
 		
+		// Randomly picks an enchant from the list
 		var randEnchant = Math.floor(Math.random()*possibleEnchants.length);
 		if (enchantsReceived[possibleEnchants[randEnchant]] === undefined) {
 			enchantsReceived[possibleEnchants[randEnchant]] = 0;
@@ -601,19 +716,23 @@ function calc(mat, tool, level) {
 		}
 	}
 	
+	// If this is the main calculator, write the results, otherwise add the probability of receiving the wanted enchant for this level to the recordedEnchant list
 	if (!isRecordingEnchants) {
 		var enchNameArray = new Array();
 		var enchProbArray = new Array();
 		
-		writeLineToOutput ("Minecraft Enchanting Calculator 2.0 - http://www.minecraftenchantmentcalculator.com/");
+		writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
 		writeLineToOutput ("");
 		writeLineToOutput ("Output log:  (This output was calculated 10,000 times, but results may still vary)");
 		writeLineToOutput ("Possible enchants for " + mat + " " + tool + " at level " + level + "...");
+		
+		// Creates an array for names and probabilieies, changes probabilities to percentages
 		for (var index in enchantsReceived) {
 			enchNameArray.push(index);
 			enchProbArray.push(enchantsReceived[index] / precision * 100)
 		}
 		
+		// Reorders enchants in order of highest probability
 		var foundOne = true;
 		var tempName;
 		var tempProb;
@@ -633,8 +752,9 @@ function calc(mat, tool, level) {
 			}
 		}
 		
+		// Write each enchant to the output
 		for (var outputIndex = 0; outputIndex < enchNameArray.length; outputIndex++) {
-			enchProbArray[outputIndex] = Math.floor(enchProbArray[outputIndex] * 10) / 10;
+			enchProbArray[outputIndex] = Math.floor(enchProbArray[outputIndex] * 10) / 10;  // Round probabilities to 2 decimal places
 			if (enchProbArray[outputIndex] < 0.1) {
 				writeLineToOutput (enchNameArray[outputIndex] + ": <0.1%");
 			} else {
@@ -642,6 +762,7 @@ function calc(mat, tool, level) {
 			}
 		}
 		
+		// Write extra info such as chances of getting an extra enchant, and special item information
 		var avglevel = level
 		writeLineToOutput ("");
 		avglevel = Math.floor(avglevel / 2);
@@ -669,14 +790,24 @@ function calc(mat, tool, level) {
 	}
 }
 
+/*
+
+    Adds enchant to possible enchant list once for each weight
+
+*/
 function addWeights (weight, newEnchant) {
 	for (var i = 0; i < weight; i++) {
 		possibleEnchants.push(newEnchant);
 	}
 }
 
+/*
+
+    Runs calc once for every level, outputting the chance of getting enchantName for each level
+
+*/
 function revCalc (enchantName, mat, tool) {
-	writeLineToOutput ("Minecraft Enchanting Calculator 2.0 - http://www.minecraftenchantmentcalculator.com/");
+	writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
 	writeLineToOutput ("");
 	writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
 	writeLineToOutput ("Possible levels for a " + enchantName + " " + mat + " " + tool + "...");
@@ -694,6 +825,8 @@ function revCalc (enchantName, mat, tool) {
 	for (var level = 1; level <= 30; level++) {
 		calc(mat, tool, level);
 	}
+	
+	// Write each level to the output
 	for (var index in recordedEnchant) {
 		if(isNaN(recordedEnchant[index])) {
 			continue;
@@ -702,7 +835,7 @@ function revCalc (enchantName, mat, tool) {
 			writeLineToOutput (index + ": <0.1%");
 			continue;
 		}
-		recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;
+		recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;  // Round percentages to two decimal places
 		writeLineToOutput (index + ": " + recordedEnchant[index] + "%");
 	}
 	isRecordingEnchants = false;
