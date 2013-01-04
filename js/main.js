@@ -98,7 +98,7 @@ $(function() {
 				$("#revtool").val("sword");
 			}
 		} else if (mat == "book" && tool != "book") {  // Check for book as material
-			$("#tool").val("book");
+			$("#revtool").val("book");
 		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
 			$("#revtool").val("sword");
 		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
@@ -106,23 +106,12 @@ $(function() {
 		}
 		
 		// Change enchantment type depending on weapon
-		// TODO: make a function for this
 		tool = $("#revtool").val();
 		
-		if (tool == "bow") {
-			changeEnchType ("bow");
-		} else if (tool == "sword") {
-			changeEnchType ("sword");
-		} else if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
+		if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
 			changeEnchType ("tool");
-		} else if (tool == "chestplate" || tool == "leggings") {
-			changeEnchType ("armour");
-		} else if (tool == "boots") {
-			changeEnchType ("boots");
-		} else if (tool == "helmet") {
-			changeEnchType ("helmet");
-		} else if (tool == "book") {
-    		changeEnchType ("book");
+		} else {
+    		changeEnchType (tool);
 		}
 	});
 	
@@ -138,7 +127,7 @@ $(function() {
 		if (tool == "bow" && mat != "wood") {  // Check for bow
 			$("#revmaterial").val("wood");
 		} else if (tool == "book" && mat != "book") {  // Check for book
-			$("#material").val("book");
+			$("#revmaterial").val("book");
 		} else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
 			$("#revmaterial").val("diamond");
 		} else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
@@ -146,21 +135,10 @@ $(function() {
 		}
 		
 		// Change enchanting type depending on weapon
-		// TODO: remove this when I make the function above
-		if (tool == "bow") {
-			changeEnchType ("bow");
-		} else if (tool == "sword") {
-			changeEnchType ("sword")
-		} else if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
-			changeEnchType ("tool")
-		} else if (tool == "chestplate" || tool == "leggings") {
-			changeEnchType ("armour")
-		} else if (tool == "boots") {
-			changeEnchType ("boots")
-		} else if (tool == "helmet") {
-			changeEnchType ("helmet")
-		} else if (tool == "book") {
-    		changeEnchType ("book");
+		if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
+			changeEnchType ("tool");
+		} else {
+    		changeEnchType (tool);
 		}
 	});
     
@@ -203,12 +181,11 @@ $(function() {
 	    var newOptions;
 	    
 	    if (newEnchType == "book") {
-    	    newOptions = {
-			  "Aqua Affinity": "aquaaffinity",
+    	    newOptions = {"Aqua Affinity": "aquaaffinity",
 			  "Bane of Arthropods": "boa",
 			  "Blast Protection": "blastprot",
 			  "Efficiency": "efficiency",
-			  "Feather Falling": "featherfalling"
+			  "Feather Falling": "featherfalling",
 			  "Fire Aspect": "fireaspect",
 			  "Fire Protection": "fireprot",
 			  "Flame": "flame",
@@ -224,7 +201,8 @@ $(function() {
     	      "Sharpness": "sharpness",
 			  "Silk Touch": "silktouch",
 			  "Smite": "smite",
-			  "Unbreaking": "unbreaking",
+			  "Thorns": "thorns",
+			  "Unbreaking": "unbreaking"
 			};
 	    } else if (newEnchType == "sword") {
 		    newOptions = {"Sharpness": "sharpness",
@@ -246,7 +224,14 @@ $(function() {
 			  "Silk Touch": "silktouch",
 			  "Fortune": "fortune"
 			};
-	    } else if (newEnchType == "armour") {
+	    } else if (newEnchType == "chestplate") {
+		    newOptions = {"Protection": "protection",
+			  "Fire Protection": "fireprot",
+			  "Projectile Protection": "projprot",
+			  "Blast Protection": "blastprot",
+			  "Thorns": "thorns"
+			};
+	    } else if (newEnchType == "leggings") {
 		    newOptions = {"Protection": "protection",
 			  "Fire Protection": "fireprot",
 			  "Projectile Protection": "projprot",
@@ -296,13 +281,13 @@ $(function() {
 			  "II": "2",
 			  "I": "1"
 			};
-	    } else if (enchName == "protection" || enchName == "fireprot" || enchName == "projprot" || enchName == "blastprot" || enchName == "featherfalling" || enchName == "power") {
+	    } else if (enchName == "protection" || enchName == "fireprot" || enchName == "projprot" || enchName == "blastprot" || enchName == "featherfalling") {
 		    newLvOptions = {"IV": "4",
 			  "III": "3",
 			  "II": "2",
 			  "I": "1"
 			};
-	    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune") {
+	    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns") {
 		    newLvOptions = {"III": "3",
 			  "II": "2",
 			  "I": "1"
@@ -703,8 +688,191 @@ function calc(mat, tool, level) {
 					addWeights(2, "Aqua Affinity I");
 				}
 			}
+			
+			if (tool == "chestplate") {  // FIXME: Thorns enchantment weight is unconfirmed, 5 seems correct though
+    			if (modifiedLevel >= 50 && modifiedLevel <= 100) {
+					addWeights(5, "Thorns III");
+				} else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
+					addWeights(5, "Thorns II");
+				} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+					addWeights(5, "Thorns I");
+				}
+			}
 		} else if (tool == "book") {
-    		// TODO: add weights for every single enchant here
+    		// Books can get every enchant
+    		if (modifiedLevel >= 50 && modifiedLevel <= 100) {
+				addWeights(5, "Thorns III");
+			} else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
+				addWeights(5, "Thorns II");
+			} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+				addWeights(5, "Thorns I");
+			}
+			
+			if (modifiedLevel >= 30 && modifiedLevel <= 60) {
+				addWeights(2, "Respiration III");
+			} else if (modifiedLevel >= 20 && modifiedLevel <= 50) {
+				addWeights(2, "Respiration II");
+			} else if (modifiedLevel >= 10 && modifiedLevel <= 40) {
+				addWeights(2, "Respiration I");
+			}
+			
+			if (modifiedLevel >= 1 && modifiedLevel <= 41) {
+				addWeights(2, "Aqua Affinity I");
+			}
+			
+			if (modifiedLevel >= 23 && modifiedLevel <= 33) {
+				addWeights(5, "Feather Falling IV");
+			} else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
+				addWeights(5, "Feather Falling III");
+			} else if (modifiedLevel >= 11 && modifiedLevel <= 21) {
+				addWeights(5, "Feather Falling II");
+			} else if (modifiedLevel >= 5 && modifiedLevel <= 15) {
+				addWeights(5, "Feather Falling I");
+			}
+			
+			if (modifiedLevel >= 34 && modifiedLevel <= 54) {
+				addWeights(10, "Protection IV");
+			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+				addWeights(10, "Protection III");
+			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+				addWeights(10, "Protection II");
+			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+				addWeights(10, "Protection I");
+			}
+			
+			if (modifiedLevel >= 34 && modifiedLevel <= 46) {
+				addWeights(5, "Fire Protection IV");
+			} else if (modifiedLevel >= 26 && modifiedLevel <= 38) {
+				addWeights(5, "Fire Protection III");
+			} else if (modifiedLevel >= 18 && modifiedLevel <= 30) {
+				addWeights(5, "Fire Protection II");
+			} else if (modifiedLevel >= 10 && modifiedLevel <= 22) {
+				addWeights(5, "Fire Protection I");
+			}
+			
+			if (modifiedLevel >= 29 && modifiedLevel <= 41) {
+				addWeights(2, "Blast Protection IV");
+			} else if (modifiedLevel >= 21 && modifiedLevel <= 33) {
+				addWeights(2, "Blast Protection III");
+			} else if (modifiedLevel >= 13 && modifiedLevel <= 25) {
+				addWeights(2, "Blast Protection II");
+			} else if (modifiedLevel >= 5 && modifiedLevel <= 17) {
+				addWeights(2, "Blast Protection I");
+			}
+			
+			if (modifiedLevel >= 21 && modifiedLevel <= 36) {
+				addWeights(5, "Projectile Protection IV");
+			} else if (modifiedLevel >= 15 && modifiedLevel <= 30) {
+				addWeights(5, "Projectile Protection III");
+			} else if (modifiedLevel >= 9 && modifiedLevel <= 24) {
+				addWeights(5, "Projectile Protection II");
+			} else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
+				addWeights(5, "Projectile Protection I");
+			}
+			
+			if (modifiedLevel >= 45 && modifiedLevel <= 65) {
+				addWeights(10, "Sharpness V");
+			} else if (modifiedLevel >= 34 && modifiedLevel <= 54) {
+				addWeights(10, "Sharpness IV");
+			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+				addWeights(10, "Sharpness III");
+			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+				addWeights(10, "Sharpness II");
+			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+				addWeights(10, "Sharpness I");
+			}
+			
+			if (modifiedLevel >= 37 && modifiedLevel <= 57) {
+				addWeights(5, "Smite V");
+				addWeights(5, "Bane of Arthropods V");
+			} else if (modifiedLevel >= 29 && modifiedLevel <= 49) {
+				addWeights(5, "Smite IV");
+				addWeights(5, "Bane of Arthropods IV");
+			} else if (modifiedLevel >= 21 && modifiedLevel <= 41) {
+				addWeights(5, "Smite III");
+				addWeights(5, "Bane of Arthropods III");
+			} else if (modifiedLevel >= 13 && modifiedLevel <= 33) {
+				addWeights(5, "Smite II");
+				addWeights(5, "Bane of Arthropods II");
+			} else if (modifiedLevel >= 5 && modifiedLevel <= 25) {
+				addWeights(5, "Smite I");
+				addWeights(5, "Bane of Arthropods I");
+			}
+			
+			if (modifiedLevel >= 25 && modifiedLevel <= 75) {
+				addWeights(5, "Knockback II");
+			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+				addWeights(5, "Knockback I");
+			}
+			
+			if (modifiedLevel >= 30 && modifiedLevel <= 80) {
+				addWeights(2, "Fire Aspect II");
+			} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+				addWeights(2, "Fire Aspect I");
+			}
+			
+			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
+				addWeights(2, "Looting III");
+			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+				addWeights(2, "Looting II");
+			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+				addWeights(2, "Looting I");
+			}
+			
+			if (modifiedLevel >= 41 && modifiedLevel <= 91) {
+				addWeights(10, "Efficiency V");
+			} else if (modifiedLevel >= 31 && modifiedLevel <= 81) {
+				addWeights(10, "Efficiency IV");
+			} else if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+				addWeights(10, "Efficiency III");
+			} else if (modifiedLevel >= 11 && modifiedLevel <= 61) {
+				addWeights(10, "Efficiency II");
+			} else if (modifiedLevel >= 1 && modifiedLevel <= 51) {
+				addWeights(10, "Efficiency I");
+			}
+			
+			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+				addWeights(1, "Silk Touch I");
+			}
+			
+			if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+				addWeights(5, "Unbreaking III");
+			} else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+				addWeights(5, "Unbreaking II");
+			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+				addWeights(5, "Unbreaking I");
+			}
+			
+			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
+				addWeights(2, "Fortune III");
+			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+				addWeights(2, "Fortune II");
+			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+				addWeights(2, "Fortune I");
+			}
+			
+			if (modifiedLevel >= 41 && modifiedLevel <= 56) {
+				addWeights(10, "Power V");
+			} else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
+				addWeights(10, "Power IV");
+			} else if (modifiedLevel >= 21 && modifiedLevel <= 36) {
+				addWeights(10, "Power III");
+			} else if (modifiedLevel >= 11 && modifiedLevel <= 26) {
+				addWeights(10, "Power II");
+			} else if (modifiedLevel >= 1 && modifiedLevel <= 16) {
+				addWeights(10, "Power I");
+			}
+			
+			if (modifiedLevel >= 32 && modifiedLevel <= 57) {
+				addWeights(2, "Punch II");
+			} else if (modifiedLevel >= 12 && modifiedLevel <= 37) {
+				addWeights(2, "Punch I");
+			}
+			
+			if (modifiedLevel >= 20 && modifiedLevel <= 50) {
+				addWeights(1, "Infinity I");
+				addWeights(2, "Flame I");
+			}
 		}
 		
 		// Randomly picks an enchant from the list
@@ -763,17 +931,19 @@ function calc(mat, tool, level) {
 		}
 		
 		// Write extra info such as chances of getting an extra enchant, and special item information
-		var avglevel = level
-		writeLineToOutput ("");
-		avglevel = Math.floor(avglevel / 2);
-		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 2nd enchant.");
-		avglevel = Math.floor(avglevel / 2);
-		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 3rd enchant.");
-		avglevel = Math.floor(avglevel / 2);
-		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
-		writeLineToOutput ("");
-		writeLineToOutput ("If you get more than one enchant, you have a higher chance of getting enchants other than the one you currently have.");
-		writeLineToOutput ("For example, you can't get Sharpness twice on a single sword, instead, Minecraft will pick another enchant.");
+		if (tool != "book") {
+    		var avglevel = level
+    		writeLineToOutput ("");
+    		avglevel = Math.floor(avglevel / 2);
+    		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 2nd enchant.");
+    		avglevel = Math.floor(avglevel / 2);
+    		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 3rd enchant.");
+    		avglevel = Math.floor(avglevel / 2);
+    		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
+    		writeLineToOutput ("");
+    		writeLineToOutput ("If you get more than one enchant, you have a higher chance of getting enchants other than the one you currently have.");
+    		writeLineToOutput ("For example, you can't get Sharpness twice on a single sword, instead, Minecraft will pick another enchant.");
+		}
 		
 		if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
 			writeLineToOutput ("");
@@ -781,7 +951,10 @@ function calc(mat, tool, level) {
 		} else if (tool == "sword") {
 			writeLineToOutput ("");
 			writeLineToOutput ("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
-		} else {
+        } else if (tool == "book") {
+            writeLineToOutput ("");
+			writeLineToOutput ("Books can only get one enchant.");
+		} else if (tool != "bow") {
 			writeLineToOutput ("");
 			writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
 		}
@@ -811,15 +984,32 @@ function revCalc (enchantName, mat, tool) {
 	writeLineToOutput ("");
 	writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
 	writeLineToOutput ("Possible levels for a " + enchantName + " " + mat + " " + tool + "...");
+	
+	// Show errors for impossible enchants
 	if (enchantName == "Power V") {
-		console.debug ("test");
 		writeLineToOutput ("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
 		return;
 	}
+	
 	if (enchantName == "Sharpness V" && mat != "gold") {
 		writeLineToOutput ("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
 		return;
 	}
+	
+	// Notice about Thorns III being pretty much impossible
+	
+	if (enchantName == "Thorns III") {
+    	writeLineToOutput ("");
+    	writeLineToOutput ("IMPORTANT NOTICE ABOUT THORNS III:");
+		writeLineToOutput ("Thorns III is almost impossible to create, and can only be obtained on a gold chestplate at less than a 0.1% chance at level 30.");
+		writeLineToOutput ("Use Thorns II for now.");
+		writeLineToOutput ("");
+		writeLineToOutput ("If you have any information (such as the enchantment weight of Thorns) please tweet me.  @protomowsh");
+		writeLineToOutput ("");
+	}
+	
+	
+	// Run calculation once for each level
 	enchantWanted = enchantName;
 	isRecordingEnchants = true;
 	for (var level = 1; level <= 30; level++) {
