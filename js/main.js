@@ -1,14 +1,20 @@
-// FIXME: Check this works when depolyed
-/*// GOOGLE +1
-(function() {
-	var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-	po.src = 'https://apis.google.com/js/plusone.js';
-	var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-})();*/
-
 // TODO: move functions out of the onPageLoad function
 // TODO: clean up code placement
 
+// Form validation
+var currentEnchType = "sword";
+
+// Calculation variables
+var enchantability;
+var modifiedLevel;
+var possibleEnchants = new Array();
+var enchantsReceived = new Object();
+var precision = 10000;
+var isRecordingEnchants = false;
+var enchantWanted;
+var recordedEnchant = new Object();
+
+// onPageLoad function
 $(function() {
     // Google +1 init
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -22,9 +28,6 @@ $(function() {
 	Cufon.replace($("#or"));
 	Cufon.replace($("#reverse_calc"));
 	Cufon.replace($("#result"));
-	
-	// MEC variables
-	var currentEnchType;
 
 	/*
         
@@ -106,13 +109,7 @@ $(function() {
 		}
 		
 		// Change enchantment type depending on weapon
-		tool = $("#revtool").val();
-		
-		if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
-			changeEnchType ("tool");
-		} else {
-    		changeEnchType (tool);
-		}
+		updateEnchType ();
 	});
 	
 	/*
@@ -135,11 +132,7 @@ $(function() {
 		}
 		
 		// Change enchanting type depending on weapon
-		if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
-			changeEnchType ("tool");
-		} else {
-    		changeEnchType (tool);
-		}
+		updateEnchType ();
 	});
     
     /*
@@ -167,154 +160,6 @@ $(function() {
     
     /*
     
-        Updates enchants listed depending on type of tool or armour
-    
-    */
-    //TODO: change to updateEnchType, remove the need for arguments
-    function changeEnchType (newEnchType) {
-	    if (newEnchType == currentEnchType) {
-		    return;  // Stops the browser from resetting values whenever a different piece of armour with the same enchant is chosen
-	    } else {
-		    currentEnchType == newEnchType;
-	    }
-	    
-	    var newOptions;
-	    
-	    if (newEnchType == "book") {
-    	    newOptions = {"Aqua Affinity": "aquaaffinity",
-			  "Bane of Arthropods": "boa",
-			  "Blast Protection": "blastprot",
-			  "Efficiency": "efficiency",
-			  "Feather Falling": "featherfalling",
-			  "Fire Aspect": "fireaspect",
-			  "Fire Protection": "fireprot",
-			  "Flame": "flame",
-			  "Fortune": "fortune",
-			  "Infinity": "infinity",
-			  "Knockback": "knockback",
-			  "Looting": "looting",
-			  "Power": "power",
-			  "Projectile Protection": "projprot",
-			  "Protection": "protection",
-			  "Punch": "punch",
-			  "Respiration": "respiration",
-    	      "Sharpness": "sharpness",
-			  "Silk Touch": "silktouch",
-			  "Smite": "smite",
-			  "Thorns": "thorns",
-			  "Unbreaking": "unbreaking"
-			};
-	    } else if (newEnchType == "sword") {
-		    newOptions = {"Sharpness": "sharpness",
-			  "Smite": "smite",
-			  "Bane of Arthropods": "boa",
-			  "Fire Aspect": "fireaspect",
-			  "Looting": "looting",
-			  "Knockback": "knockback"
-			};
-	    } else if (newEnchType == "bow") {
-		    newOptions = {"Power": "power",
-			  "Punch": "punch",
-			  "Flame": "flame",
-			  "Infinity": "infinity"
-			};
-	    } else if (newEnchType == "tool") {
-		    newOptions = {"Unbreaking": "unbreaking",
-			  "Efficiency": "efficiency",
-			  "Silk Touch": "silktouch",
-			  "Fortune": "fortune"
-			};
-	    } else if (newEnchType == "chestplate") {
-		    newOptions = {"Protection": "protection",
-			  "Fire Protection": "fireprot",
-			  "Projectile Protection": "projprot",
-			  "Blast Protection": "blastprot",
-			  "Thorns": "thorns"
-			};
-	    } else if (newEnchType == "leggings") {
-		    newOptions = {"Protection": "protection",
-			  "Fire Protection": "fireprot",
-			  "Projectile Protection": "projprot",
-			  "Blast Protection": "blastprot"
-			};
-	    } else if (newEnchType == "boots") {
-		    newOptions = {"Protection": "protection",
-			  "Fire Protection": "fireprot",
-			  "Projectile Protection": "projprot",
-			  "Blast Protection": "blastprot",
-			  "Feather Falling": "featherfalling"
-			};
-	    } else if (newEnchType == "helmet") {
-		    newOptions = {"Protection": "protection",
-			  "Fire Protection": "fireprot",
-			  "Projectile Protection": "projprot",
-			  "Blast Protection": "blastprot",
-			  "Aqua Affinity": "aquaaffinity",
-			  "Respiration": "respiration"
-			};
-	    }
-	    
-	    // Applies new key value pairs to the list of enchants
-	    var $el = $("#enchant");
-		$el.empty();
-		$.each(newOptions, function(key, value) {
-		  $el.append($("<option></option>")
-		     .attr("value", value).text(key));
-		});
-		
-		changeEnchLevels();  // Updates newly selected enchant's possible levels
-    }
-    
-    /*
-    
-        Updates min and max levels depending on the currently selected enchant
-    
-    */
-    function changeEnchLevels() {
-	    var enchName = $("#enchant").val();
-	    var newLvOptions;
-	    
-	    if (enchName == "sharpness" || enchName == "smite" || enchName == "boa" || enchName == "efficiency" || enchName == "power") {
-		    newLvOptions = {"IV": "4",  // 4 before 5, because 5 is impossible to get on anything useful
-			  "V": "5",
-			  "III": "3",
-			  "II": "2",
-			  "I": "1"
-			};
-	    } else if (enchName == "protection" || enchName == "fireprot" || enchName == "projprot" || enchName == "blastprot" || enchName == "featherfalling") {
-		    newLvOptions = {"IV": "4",
-			  "III": "3",
-			  "II": "2",
-			  "I": "1"
-			};
-	    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns") {
-		    newLvOptions = {"III": "3",
-			  "II": "2",
-			  "I": "1"
-			};
-	    } else if (enchName == "knockback" || enchName == "fireaspect" || enchName == "punch") {
-		    newLvOptions = {"II": "2",
-			  "I": "1"
-			};
-	    } else if (enchName == "flame" || enchName == "infinity" || enchName == "silktouch" || enchName == "aquaaffinity") {
-		    newLvOptions = {"I": "1"};
-	    }
-	    
-	    // Applies the new key value pairs to the list of levels
-	    var $el = $("#enchlevel");
-		$el.empty();
-		$.each(newLvOptions, function(key, value) {
-		  $el.append($("<option></option>")
-		     .attr("value", value).text(key));
-		});
-    }
-    
-    // Sets the default enchant type to sword
-    // TODO: Move this somewhere useful, or just remove it all together
-    changeEnchType ("sword");
-    
-    /*
-    
         When the user clicks the calculate button
     
     */
@@ -336,7 +181,6 @@ $(function() {
 			    height: "300px"
 		    }, 500, function() {
 			    $("#calcback").click(function(){  // Close the result when the user clicks back
-    			    // TODO: Move this to its own function, same function for both back buttons on either calculator
 				    $("#main_window").css("border-bottom", "none");
 				    $("#result").css("border-top", "none");
 				    $("#result").animate({
@@ -378,7 +222,6 @@ $(function() {
 			    height: "300px"
 		    }, 500, function() {
 			    $("#calcback").click(function(){  // Close the result when the user clicks back
-    			    // TODO: Move this to its own function, same function for both back buttons on either calculator
 				    $("#main_window").css("border-bottom", "none");
 				    $("#result").css("border-top", "none");
 				    $("#result").animate({
@@ -397,25 +240,7 @@ $(function() {
 	    });
     });
     
-    /*
-    
-        Creates a quick code for use in the link text box under results
-    
-    */
-    function getQuickCode(type) {
-        // Type 1 is normal calculator, 2 is the 2nd calculator
-	    if (type == 1) {
-		    return "1" + $("#material")[0].selectedIndex + $("#tool")[0].selectedIndex + $("#level").val();
-	    } else if (type == 2) {
-		    return "2" + $("#revmaterial")[0].selectedIndex + $("#revtool")[0].selectedIndex + $("#enchant")[0].selectedIndex + $("#enchlevel")[0].selectedIndex;
-	    }
-    }
-    
-    /*
-    
-        Handles quick codes if the url contains one
-    
-    */
+    // Handles quick codes if the url contains one
     if (window.location.hash.replace("#", "") != "") {
     	var quickCode = window.location.hash.replace("#", "");
 	    if (quickCode.charAt(0) == "1") {
@@ -428,20 +253,7 @@ $(function() {
 		    console.debug("Type 2 quick code detected. " + quickCode);
 		    $("#revmaterial option").eq(parseInt(quickCode.charAt(1))).attr("selected", "selected");
 		    $("#revtool option").eq(parseInt(quickCode.charAt(2))).attr("selected", "selected");
-		    var tool = $("#revtool").val()
-		    if (tool == "bow") {
-				changeEnchType ("bow");
-			} else if (tool == "sword") {
-				changeEnchType ("sword")
-			} else if (tool == "pickaxe" || tool == "axe" || tool == "shovel") {
-				changeEnchType ("tool")
-			} else if (tool == "chestplate" || tool == "leggings") {
-				changeEnchType ("armour")
-			} else if (tool == "boots") {
-				changeEnchType ("boots")
-			} else if (tool == "helmet") {
-				changeEnchType ("helmet")
-			} 
+		    updateEnchType ()
 		    $("#enchant option").eq(parseInt(quickCode.charAt(3))).attr("selected", "selected");
 		    changeEnchLevels();
 		    $("#enchlevel option").eq(parseInt(quickCode.charAt(4))).attr("selected", "selected");
@@ -452,23 +264,176 @@ $(function() {
 
 /*
 
+    Creates a quick code for use in the link text box under results
+
+*/
+function getQuickCode(type) {
+    // Type 1 is normal calculator, 2 is the 2nd calculator
+    if (type == 1) {
+	    return "1" + $("#material")[0].selectedIndex + $("#tool")[0].selectedIndex + $("#level").val();
+    } else if (type == 2) {
+	    return "2" + $("#revmaterial")[0].selectedIndex + $("#revtool")[0].selectedIndex + $("#enchant")[0].selectedIndex + $("#enchlevel")[0].selectedIndex;
+    }
+}
+
+/*
+
+    Updates enchants listed depending on type of tool or armour
+
+*/
+function updateEnchType () {
+    var newEnchType;
+    if ($("#revtool").val() == "pickaxe" || $("#revtool").val() == "axe" || $("#revtool").val() == "shovel") {
+		newEnchType = "tool";
+	} else {
+		newEnchType = $("#revtool").val();
+	}
+    
+    if (newEnchType == currentEnchType) {
+	    return;  // Stops the browser from resetting values whenever a different piece of armour with the same enchant is chosen
+    } else {
+	    currentEnchType = newEnchType;
+    }
+    
+    var newOptions;
+    
+    if (newEnchType == "book") {
+	    newOptions = {"Aqua Affinity": "aquaaffinity",
+		  "Bane of Arthropods": "boa",
+		  "Blast Protection": "blastprot",
+		  "Efficiency": "efficiency",
+		  "Feather Falling": "featherfalling",
+		  "Fire Aspect": "fireaspect",
+		  "Fire Protection": "fireprot",
+		  "Flame": "flame",
+		  "Fortune": "fortune",
+		  "Infinity": "infinity",
+		  "Knockback": "knockback",
+		  "Looting": "looting",
+		  "Power": "power",
+		  "Projectile Protection": "projprot",
+		  "Protection": "protection",
+		  "Punch": "punch",
+		  "Respiration": "respiration",
+	      "Sharpness": "sharpness",
+		  "Silk Touch": "silktouch",
+		  "Smite": "smite",
+		  "Thorns": "thorns",
+		  "Unbreaking": "unbreaking"
+		};
+    } else if (newEnchType == "sword") {
+	    newOptions = {"Sharpness": "sharpness",
+		  "Smite": "smite",
+		  "Bane of Arthropods": "boa",
+		  "Fire Aspect": "fireaspect",
+		  "Looting": "looting",
+		  "Knockback": "knockback"
+		};
+    } else if (newEnchType == "bow") {
+	    newOptions = {"Power": "power",
+		  "Punch": "punch",
+		  "Flame": "flame",
+		  "Infinity": "infinity"
+		};
+    } else if (newEnchType == "tool") {
+	    newOptions = {"Unbreaking": "unbreaking",
+		  "Efficiency": "efficiency",
+		  "Silk Touch": "silktouch",
+		  "Fortune": "fortune"
+		};
+    } else if (newEnchType == "chestplate") {
+	    newOptions = {"Protection": "protection",
+		  "Fire Protection": "fireprot",
+		  "Projectile Protection": "projprot",
+		  "Blast Protection": "blastprot",
+		  "Thorns": "thorns"
+		};
+    } else if (newEnchType == "leggings") {
+	    newOptions = {"Protection": "protection",
+		  "Fire Protection": "fireprot",
+		  "Projectile Protection": "projprot",
+		  "Blast Protection": "blastprot"
+		};
+    } else if (newEnchType == "boots") {
+	    newOptions = {"Protection": "protection",
+		  "Fire Protection": "fireprot",
+		  "Projectile Protection": "projprot",
+		  "Blast Protection": "blastprot",
+		  "Feather Falling": "featherfalling"
+		};
+    } else if (newEnchType == "helmet") {
+	    newOptions = {"Protection": "protection",
+		  "Fire Protection": "fireprot",
+		  "Projectile Protection": "projprot",
+		  "Blast Protection": "blastprot",
+		  "Aqua Affinity": "aquaaffinity",
+		  "Respiration": "respiration"
+		};
+    }
+    
+    // Applies new key value pairs to the list of enchants
+    var $el = $("#enchant");
+	$el.empty();
+	$.each(newOptions, function(key, value) {
+	  $el.append($("<option></option>")
+	     .attr("value", value).text(key));
+	});
+	
+	changeEnchLevels();  // Updates newly selected enchant's possible levels
+}
+
+/*
+
+    Updates min and max levels depending on the currently selected enchant
+
+*/
+function changeEnchLevels() {
+    var enchName = $("#enchant").val();
+    var newLvOptions;
+    
+    if (enchName == "sharpness" || enchName == "smite" || enchName == "boa" || enchName == "efficiency" || enchName == "power") {
+	    newLvOptions = {"IV": "4",  // 4 before 5, because 5 is impossible to get on anything useful
+		  "V": "5",
+		  "III": "3",
+		  "II": "2",
+		  "I": "1"
+		};
+    } else if (enchName == "protection" || enchName == "fireprot" || enchName == "projprot" || enchName == "blastprot" || enchName == "featherfalling") {
+	    newLvOptions = {"IV": "4",
+		  "III": "3",
+		  "II": "2",
+		  "I": "1"
+		};
+    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns") {
+	    newLvOptions = {"III": "3",
+		  "II": "2",
+		  "I": "1"
+		};
+    } else if (enchName == "knockback" || enchName == "fireaspect" || enchName == "punch") {
+	    newLvOptions = {"II": "2",
+		  "I": "1"
+		};
+    } else if (enchName == "flame" || enchName == "infinity" || enchName == "silktouch" || enchName == "aquaaffinity") {
+	    newLvOptions = {"I": "1"};
+    }
+    
+    // Applies the new key value pairs to the list of levels
+    var $el = $("#enchlevel");
+	$el.empty();
+	$.each(newLvOptions, function(key, value) {
+	  $el.append($("<option></option>")
+	     .attr("value", value).text(key));
+	});
+}
+
+/*
+
     Writes a line to the result output
 
 */
 function writeLineToOutput (s) {
 	$("#outputArea").val($("#outputArea").val() + s + "\n");
 }
-
-// TODO: Move these somewhere useful
-// Calculation variables
-var enchantability;
-var modifiedLevel;
-var possibleEnchants = new Array();
-var enchantsReceived = new Object();
-var precision = 10000;
-var isRecordingEnchants = false;
-var enchantWanted;
-var recordedEnchant = new Object();
 
 /*
 
