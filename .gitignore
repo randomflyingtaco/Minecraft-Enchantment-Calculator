@@ -1,10 +1,10 @@
 # Internet stuff
-.htaccess
-robots.txt
-sitemap.txt
+/.htaccess
+/robots.txt
+/sitemap.txt
 
 # OS X
-/.DS_Store
+.DS_Store
 
 # Eclipse
 /.classpath
