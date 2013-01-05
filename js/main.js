@@ -2,7 +2,7 @@
 // TODO: clean up code placement
 
 // Form validation
-var currentEnchType = "sword";
+var currentEnchType;
 
 // Calculation variables
 var enchantability;
@@ -14,7 +14,7 @@ var isRecordingEnchants = false;
 var enchantWanted;
 var recordedEnchant = new Object();
 
-// onPageLoad function
+// onPageLoad
 $(function() {
     // Google +1 init
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
@@ -154,9 +154,7 @@ $(function() {
         Function changes the enchant levels whenever a different enchant is chosen
     
     */
-    $("#enchant").change(function() {
-	    changeEnchLevels();
-    });
+    $("#enchant").change(changeEnchLevels);
     
     /*
     
@@ -240,6 +238,9 @@ $(function() {
 	    });
     });
     
+    // Update list of enchants
+    updateEnchType ();
+    
     // Handles quick codes if the url contains one
     if (window.location.hash.replace("#", "") != "") {
     	var quickCode = window.location.hash.replace("#", "");
@@ -254,9 +255,16 @@ $(function() {
 		    $("#revmaterial option").eq(parseInt(quickCode.charAt(1))).attr("selected", "selected");
 		    $("#revtool option").eq(parseInt(quickCode.charAt(2))).attr("selected", "selected");
 		    updateEnchType ()
-		    $("#enchant option").eq(parseInt(quickCode.charAt(3))).attr("selected", "selected");
-		    changeEnchLevels();
-		    $("#enchlevel option").eq(parseInt(quickCode.charAt(4))).attr("selected", "selected");
+		    // Check if quickcode is longer than ususal
+		    if (quickCode.length > 5) {
+    		    $("#enchant option").eq(parseInt(quickCode.charAt(3) + quickCode.charAt(4))).attr("selected", "selected");
+    		    changeEnchLevels();
+    		    $("#enchlevel option").eq(parseInt(quickCode.charAt(5))).attr("selected", "selected");
+		    } else {
+    		    $("#enchant option").eq(parseInt(quickCode.charAt(3))).attr("selected", "selected");
+    		    changeEnchLevels();
+    		    $("#enchlevel option").eq(parseInt(quickCode.charAt(4))).attr("selected", "selected");
+		    }
 		    $("#revcalc").click();
 	    }
     }
@@ -433,6 +441,78 @@ function changeEnchLevels() {
 */
 function writeLineToOutput (s) {
 	$("#outputArea").val($("#outputArea").val() + s + "\n");
+}
+
+/*
+
+    Adds enchant to possible enchant list once for each weight
+
+*/
+function addWeights (weight, newEnchant) {
+	for (var i = 0; i < weight; i++) {
+		possibleEnchants.push(newEnchant);
+	}
+}
+
+/*
+
+    Runs calc once for every level, outputting the chance of getting enchantName for each level
+
+*/
+function revCalc (enchantName, mat, tool) {
+	writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
+	writeLineToOutput ("");
+	writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
+	if (mat == "book") {
+        writeLineToOutput ("Possible levels for a " + enchantName + " book...");
+	} else {
+	    writeLineToOutput ("Possible levels for a " + enchantName + " " + mat + " " + tool + "...");
+	}
+	
+	// Show errors for impossible enchants
+	if (enchantName == "Power V") {
+		writeLineToOutput ("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
+		return;
+	}
+	
+	if (enchantName == "Sharpness V" && mat != "gold") {
+		writeLineToOutput ("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
+		return;
+	}
+	
+	// Notice about Thorns III being pretty much impossible
+	
+	if (enchantName == "Thorns III") {
+    	writeLineToOutput ("");
+    	writeLineToOutput ("IMPORTANT NOTICE ABOUT THORNS III:");
+		writeLineToOutput ("Thorns III is almost impossible to create, and can only be obtained on a gold chestplate at less than a 0.1% chance at level 30.");
+		writeLineToOutput ("Use Thorns II for now.");
+		writeLineToOutput ("");
+		writeLineToOutput ("If you have any information (such as the enchantment weight of Thorns) please tweet me.  @protomowsh");
+		writeLineToOutput ("");
+	}
+	
+	
+	// Run calculation once for each level
+	enchantWanted = enchantName;
+	isRecordingEnchants = true;
+	for (var level = 1; level <= 30; level++) {
+		calc(mat, tool, level);
+	}
+	
+	// Write each level to the output
+	for (var index in recordedEnchant) {
+		if(isNaN(recordedEnchant[index])) {
+			continue;
+		}
+		if(recordedEnchant[index] == 0) {
+			writeLineToOutput (index + ": <0.1%");
+			continue;
+		}
+		recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;  // Round percentages to two decimal places
+		writeLineToOutput (index + ": " + recordedEnchant[index] + "%");
+	}
+	isRecordingEnchants = false;
 }
 
 /*
@@ -857,7 +937,11 @@ function calc(mat, tool, level) {
 		writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
 		writeLineToOutput ("");
 		writeLineToOutput ("Output log:  (This output was calculated 10,000 times, but results may still vary)");
-		writeLineToOutput ("Possible enchants for " + mat + " " + tool + " at level " + level + "...");
+		if (mat == "book") {
+    		writeLineToOutput ("Possible enchants for book at level " + level + "...");
+		} else {
+    		writeLineToOutput ("Possible enchants for " + mat + " " + tool + " at level " + level + "...");
+		}
 		
 		// Creates an array for names and probabilieies, changes probabilities to percentages
 		for (var index in enchantsReceived) {
@@ -926,72 +1010,4 @@ function calc(mat, tool, level) {
 	} else {
 		recordedEnchant[level] = enchantsReceived[enchantWanted] / precision * 100;
 	}
-}
-
-/*
-
-    Adds enchant to possible enchant list once for each weight
-
-*/
-function addWeights (weight, newEnchant) {
-	for (var i = 0; i < weight; i++) {
-		possibleEnchants.push(newEnchant);
-	}
-}
-
-/*
-
-    Runs calc once for every level, outputting the chance of getting enchantName for each level
-
-*/
-function revCalc (enchantName, mat, tool) {
-	writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
-	writeLineToOutput ("");
-	writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
-	writeLineToOutput ("Possible levels for a " + enchantName + " " + mat + " " + tool + "...");
-	
-	// Show errors for impossible enchants
-	if (enchantName == "Power V") {
-		writeLineToOutput ("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
-		return;
-	}
-	
-	if (enchantName == "Sharpness V" && mat != "gold") {
-		writeLineToOutput ("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
-		return;
-	}
-	
-	// Notice about Thorns III being pretty much impossible
-	
-	if (enchantName == "Thorns III") {
-    	writeLineToOutput ("");
-    	writeLineToOutput ("IMPORTANT NOTICE ABOUT THORNS III:");
-		writeLineToOutput ("Thorns III is almost impossible to create, and can only be obtained on a gold chestplate at less than a 0.1% chance at level 30.");
-		writeLineToOutput ("Use Thorns II for now.");
-		writeLineToOutput ("");
-		writeLineToOutput ("If you have any information (such as the enchantment weight of Thorns) please tweet me.  @protomowsh");
-		writeLineToOutput ("");
-	}
-	
-	
-	// Run calculation once for each level
-	enchantWanted = enchantName;
-	isRecordingEnchants = true;
-	for (var level = 1; level <= 30; level++) {
-		calc(mat, tool, level);
-	}
-	
-	// Write each level to the output
-	for (var index in recordedEnchant) {
-		if(isNaN(recordedEnchant[index])) {
-			continue;
-		}
-		if(recordedEnchant[index] == 0) {
-			writeLineToOutput (index + ": <0.1%");
-			continue;
-		}
-		recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;  // Round percentages to two decimal places
-		writeLineToOutput (index + ": " + recordedEnchant[index] + "%");
-	}
-	isRecordingEnchants = false;
 }
