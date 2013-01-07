@@ -1,6 +1,3 @@
-// TODO: move functions out of the onPageLoad function
-// TODO: clean up code placement
-
 // Form validation
 var currentEnchType;
 
@@ -561,23 +558,28 @@ function calc(mat, tool, level) {
 		modifiedLevel = Math.floor(modifiedLevel * ((Math.random() + Math.random() - 1) * 0.15 + 1) + 0.5);
 		
 		// Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
-		// TODO: (IMPORTANT) research if removing the else ifs would increase the calculator's precision
+		// TODO: Add multi-enchants using while(true), make sure you can't get the same enchant class twice by checking the last (1 or 2) enchants in the list, and keeping a record of what enchant # this is
 		if (tool == "bow") {
 			if (modifiedLevel >= 41 && modifiedLevel <= 56) {
 				addWeights(10, "Power V");
-			} else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
+			}
+			if (modifiedLevel >= 31 && modifiedLevel <= 46) {
 				addWeights(10, "Power IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 36) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 36) {
 				addWeights(10, "Power III");
-			} else if (modifiedLevel >= 11 && modifiedLevel <= 26) {
+			}
+			if (modifiedLevel >= 11 && modifiedLevel <= 26) {
 				addWeights(10, "Power II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 16) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 16) {
 				addWeights(10, "Power I");
 			}
 			
 			if (modifiedLevel >= 32 && modifiedLevel <= 57) {
 				addWeights(2, "Punch II");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 37) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 37) {
 				addWeights(2, "Punch I");
 			}
 			
@@ -588,15 +590,19 @@ function calc(mat, tool, level) {
 		} else if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
 			if (modifiedLevel >= 41 && modifiedLevel <= 91) {
 				addWeights(10, "Efficiency V");
-			} else if (modifiedLevel >= 31 && modifiedLevel <= 81) {
-				addWeights(10, "Efficiency IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 71) {
-				addWeights(10, "Efficiency III");
-			} else if (modifiedLevel >= 11 && modifiedLevel <= 61) {
-				addWeights(10, "Efficiency II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 51) {
-				addWeights(10, "Efficiency I");
 			}
+			if (modifiedLevel >= 31 && modifiedLevel <= 81) {
+				addWeights(10, "Efficiency IV");
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+				addWeights(10, "Efficiency III");
+			}
+			if (modifiedLevel >= 11 && modifiedLevel <= 61) {
+				addWeights(10, "Efficiency II");
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 51) {
+				addWeights(10, "Efficiency I");
+            }
 			
 			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
 				addWeights(1, "Silk Touch I");
@@ -604,106 +610,134 @@ function calc(mat, tool, level) {
 			
 			if (modifiedLevel >= 21 && modifiedLevel <= 71) {
 				addWeights(5, "Unbreaking III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 63) {
 				addWeights(5, "Unbreaking II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 55) {
 				addWeights(5, "Unbreaking I");
 			}
 			
 			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
 				addWeights(2, "Fortune III");
-			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+			}
+			if (modifiedLevel >= 24 && modifiedLevel <= 74) {
 				addWeights(2, "Fortune II");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
 				addWeights(2, "Fortune I");
 			}
 		} else if (tool == "sword") {
 			if (modifiedLevel >= 45 && modifiedLevel <= 65) {
 				addWeights(10, "Sharpness V");
-			} else if (modifiedLevel >= 34 && modifiedLevel <= 54) {
+			}
+			if (modifiedLevel >= 34 && modifiedLevel <= 54) {
 				addWeights(10, "Sharpness IV");
-			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+			}
+			if (modifiedLevel >= 23 && modifiedLevel <= 43) {
 				addWeights(10, "Sharpness III");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 32) {
 				addWeights(10, "Sharpness II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 21) {
 				addWeights(10, "Sharpness I");
 			}
 			
 			if (modifiedLevel >= 37 && modifiedLevel <= 57) {
 				addWeights(5, "Smite V");
 				addWeights(5, "Bane of Arthropods V");
-			} else if (modifiedLevel >= 29 && modifiedLevel <= 49) {
+			}
+			if (modifiedLevel >= 29 && modifiedLevel <= 49) {
 				addWeights(5, "Smite IV");
 				addWeights(5, "Bane of Arthropods IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 41) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 41) {
 				addWeights(5, "Smite III");
 				addWeights(5, "Bane of Arthropods III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 33) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 33) {
 				addWeights(5, "Smite II");
 				addWeights(5, "Bane of Arthropods II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 25) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 25) {
 				addWeights(5, "Smite I");
 				addWeights(5, "Bane of Arthropods I");
 			}
 			
 			if (modifiedLevel >= 25 && modifiedLevel <= 75) {
 				addWeights(5, "Knockback II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 55) {
 				addWeights(5, "Knockback I");
 			}
 			
 			if (modifiedLevel >= 30 && modifiedLevel <= 80) {
 				addWeights(2, "Fire Aspect II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 60) {
 				addWeights(2, "Fire Aspect I");
 			}
 			
 			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
 				addWeights(2, "Looting III");
-			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+			}
+			if (modifiedLevel >= 24 && modifiedLevel <= 74) {
 				addWeights(2, "Looting II");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
 				addWeights(2, "Looting I");
 			}
 		} else if (tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") {
 			if (modifiedLevel >= 34 && modifiedLevel <= 54) {
 				addWeights(10, "Protection IV");
-			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+			}
+			if (modifiedLevel >= 23 && modifiedLevel <= 43) {
 				addWeights(10, "Protection III");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 32) {
 				addWeights(10, "Protection II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 21) {
 				addWeights(10, "Protection I");
 			}
 			
 			if (modifiedLevel >= 34 && modifiedLevel <= 46) {
 				addWeights(5, "Fire Protection IV");
-			} else if (modifiedLevel >= 26 && modifiedLevel <= 38) {
+			}
+			if (modifiedLevel >= 26 && modifiedLevel <= 38) {
 				addWeights(5, "Fire Protection III");
-			} else if (modifiedLevel >= 18 && modifiedLevel <= 30) {
+			}
+			if (modifiedLevel >= 18 && modifiedLevel <= 30) {
 				addWeights(5, "Fire Protection II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 22) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 22) {
 				addWeights(5, "Fire Protection I");
 			}
 			
 			if (modifiedLevel >= 29 && modifiedLevel <= 41) {
 				addWeights(2, "Blast Protection IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 33) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 33) {
 				addWeights(2, "Blast Protection III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 25) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 25) {
 				addWeights(2, "Blast Protection II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 17) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 17) {
 				addWeights(2, "Blast Protection I");
 			}
 			
 			if (modifiedLevel >= 21 && modifiedLevel <= 36) {
 				addWeights(5, "Projectile Protection IV");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 30) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 30) {
 				addWeights(5, "Projectile Protection III");
-			} else if (modifiedLevel >= 9 && modifiedLevel <= 24) {
+			}
+			if (modifiedLevel >= 9 && modifiedLevel <= 24) {
 				addWeights(5, "Projectile Protection II");
-			} else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
+			}
+			if (modifiedLevel >= 3 && modifiedLevel <= 18) {
 				addWeights(5, "Projectile Protection I");
 			}
 			
@@ -711,11 +745,14 @@ function calc(mat, tool, level) {
 			if (tool == "boots") {
 				if (modifiedLevel >= 23 && modifiedLevel <= 33) {
 					addWeights(5, "Feather Falling IV");
-				} else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
+				}
+				if (modifiedLevel >= 17 && modifiedLevel <= 27) {
 					addWeights(5, "Feather Falling III");
-				} else if (modifiedLevel >= 11 && modifiedLevel <= 21) {
+				}
+				if (modifiedLevel >= 11 && modifiedLevel <= 21) {
 					addWeights(5, "Feather Falling II");
-				} else if (modifiedLevel >= 5 && modifiedLevel <= 15) {
+				}
+				if (modifiedLevel >= 5 && modifiedLevel <= 15) {
 					addWeights(5, "Feather Falling I");
 				}
 			}
@@ -723,9 +760,11 @@ function calc(mat, tool, level) {
 			if (tool == "helmet") {
 				if (modifiedLevel >= 30 && modifiedLevel <= 60) {
 					addWeights(2, "Respiration III");
-				} else if (modifiedLevel >= 20 && modifiedLevel <= 50) {
+				}
+				if (modifiedLevel >= 20 && modifiedLevel <= 50) {
 					addWeights(2, "Respiration II");
-				} else if (modifiedLevel >= 10 && modifiedLevel <= 40) {
+				}
+				if (modifiedLevel >= 10 && modifiedLevel <= 40) {
 					addWeights(2, "Respiration I");
 				}
 				
@@ -737,9 +776,11 @@ function calc(mat, tool, level) {
 			if (tool == "chestplate") {  // FIXME: Thorns enchantment weight is unconfirmed, 5 seems correct though
     			if (modifiedLevel >= 50 && modifiedLevel <= 100) {
 					addWeights(5, "Thorns III");
-				} else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
+				}
+				if (modifiedLevel >= 30 && modifiedLevel <= 80) {
 					addWeights(5, "Thorns II");
-				} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+				}
+				if (modifiedLevel >= 10 && modifiedLevel <= 60) {
 					addWeights(5, "Thorns I");
 				}
 			}
@@ -747,17 +788,21 @@ function calc(mat, tool, level) {
     		// Books can get every enchant
     		if (modifiedLevel >= 50 && modifiedLevel <= 100) {
 				addWeights(5, "Thorns III");
-			} else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
+			}
+			if (modifiedLevel >= 30 && modifiedLevel <= 80) {
 				addWeights(5, "Thorns II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 60) {
 				addWeights(5, "Thorns I");
 			}
 			
 			if (modifiedLevel >= 30 && modifiedLevel <= 60) {
 				addWeights(2, "Respiration III");
-			} else if (modifiedLevel >= 20 && modifiedLevel <= 50) {
+			}
+			if (modifiedLevel >= 20 && modifiedLevel <= 50) {
 				addWeights(2, "Respiration II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 40) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 40) {
 				addWeights(2, "Respiration I");
 			}
 			
@@ -767,9 +812,11 @@ function calc(mat, tool, level) {
 			
 			if (modifiedLevel >= 23 && modifiedLevel <= 33) {
 				addWeights(5, "Feather Falling IV");
-			} else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
+			}
+			if (modifiedLevel >= 17 && modifiedLevel <= 27) {
 				addWeights(5, "Feather Falling III");
-			} else if (modifiedLevel >= 11 && modifiedLevel <= 21) {
+			}
+			if (modifiedLevel >= 11 && modifiedLevel <= 21) {
 				addWeights(5, "Feather Falling II");
 			} else if (modifiedLevel >= 5 && modifiedLevel <= 15) {
 				addWeights(5, "Feather Falling I");
@@ -777,102 +824,130 @@ function calc(mat, tool, level) {
 			
 			if (modifiedLevel >= 34 && modifiedLevel <= 54) {
 				addWeights(10, "Protection IV");
-			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+			}
+			if (modifiedLevel >= 23 && modifiedLevel <= 43) {
 				addWeights(10, "Protection III");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 32) {
 				addWeights(10, "Protection II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 21) {
 				addWeights(10, "Protection I");
 			}
 			
 			if (modifiedLevel >= 34 && modifiedLevel <= 46) {
 				addWeights(5, "Fire Protection IV");
-			} else if (modifiedLevel >= 26 && modifiedLevel <= 38) {
+			}
+			if (modifiedLevel >= 26 && modifiedLevel <= 38) {
 				addWeights(5, "Fire Protection III");
-			} else if (modifiedLevel >= 18 && modifiedLevel <= 30) {
+			}
+			if (modifiedLevel >= 18 && modifiedLevel <= 30) {
 				addWeights(5, "Fire Protection II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 22) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 22) {
 				addWeights(5, "Fire Protection I");
 			}
 			
 			if (modifiedLevel >= 29 && modifiedLevel <= 41) {
 				addWeights(2, "Blast Protection IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 33) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 33) {
 				addWeights(2, "Blast Protection III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 25) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 25) {
 				addWeights(2, "Blast Protection II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 17) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 17) {
 				addWeights(2, "Blast Protection I");
 			}
 			
 			if (modifiedLevel >= 21 && modifiedLevel <= 36) {
 				addWeights(5, "Projectile Protection IV");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 30) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 30) {
 				addWeights(5, "Projectile Protection III");
-			} else if (modifiedLevel >= 9 && modifiedLevel <= 24) {
+			}
+			if (modifiedLevel >= 9 && modifiedLevel <= 24) {
 				addWeights(5, "Projectile Protection II");
-			} else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
+			}
+			if (modifiedLevel >= 3 && modifiedLevel <= 18) {
 				addWeights(5, "Projectile Protection I");
 			}
 			
 			if (modifiedLevel >= 45 && modifiedLevel <= 65) {
 				addWeights(10, "Sharpness V");
-			} else if (modifiedLevel >= 34 && modifiedLevel <= 54) {
+			}
+			if (modifiedLevel >= 34 && modifiedLevel <= 54) {
 				addWeights(10, "Sharpness IV");
-			} else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
+			}
+			if (modifiedLevel >= 23 && modifiedLevel <= 43) {
 				addWeights(10, "Sharpness III");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 32) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 32) {
 				addWeights(10, "Sharpness II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 21) {
 				addWeights(10, "Sharpness I");
 			}
 			
 			if (modifiedLevel >= 37 && modifiedLevel <= 57) {
 				addWeights(5, "Smite V");
 				addWeights(5, "Bane of Arthropods V");
-			} else if (modifiedLevel >= 29 && modifiedLevel <= 49) {
+			}
+			if (modifiedLevel >= 29 && modifiedLevel <= 49) {
 				addWeights(5, "Smite IV");
 				addWeights(5, "Bane of Arthropods IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 41) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 41) {
 				addWeights(5, "Smite III");
 				addWeights(5, "Bane of Arthropods III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 33) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 33) {
 				addWeights(5, "Smite II");
 				addWeights(5, "Bane of Arthropods II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 25) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 25) {
 				addWeights(5, "Smite I");
 				addWeights(5, "Bane of Arthropods I");
 			}
 			
 			if (modifiedLevel >= 25 && modifiedLevel <= 75) {
 				addWeights(5, "Knockback II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 55) {
 				addWeights(5, "Knockback I");
 			}
 			
 			if (modifiedLevel >= 30 && modifiedLevel <= 80) {
 				addWeights(2, "Fire Aspect II");
-			} else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
+			}
+			if (modifiedLevel >= 10 && modifiedLevel <= 60) {
 				addWeights(2, "Fire Aspect I");
 			}
 			
 			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
 				addWeights(2, "Looting III");
-			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+			}
+			if (modifiedLevel >= 24 && modifiedLevel <= 74) {
 				addWeights(2, "Looting II");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
 				addWeights(2, "Looting I");
 			}
 			
 			if (modifiedLevel >= 41 && modifiedLevel <= 91) {
 				addWeights(10, "Efficiency V");
-			} else if (modifiedLevel >= 31 && modifiedLevel <= 81) {
+			}
+			if (modifiedLevel >= 31 && modifiedLevel <= 81) {
 				addWeights(10, "Efficiency IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 71) {
 				addWeights(10, "Efficiency III");
-			} else if (modifiedLevel >= 11 && modifiedLevel <= 61) {
+			}
+			if (modifiedLevel >= 11 && modifiedLevel <= 61) {
 				addWeights(10, "Efficiency II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 51) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 51) {
 				addWeights(10, "Efficiency I");
 			}
 			
@@ -882,35 +957,44 @@ function calc(mat, tool, level) {
 			
 			if (modifiedLevel >= 21 && modifiedLevel <= 71) {
 				addWeights(5, "Unbreaking III");
-			} else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+			}
+			if (modifiedLevel >= 13 && modifiedLevel <= 63) {
 				addWeights(5, "Unbreaking II");
-			} else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+			}
+			if (modifiedLevel >= 5 && modifiedLevel <= 55) {
 				addWeights(5, "Unbreaking I");
 			}
 			
 			if (modifiedLevel >= 33 && modifiedLevel <= 83) {
 				addWeights(2, "Fortune III");
-			} else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
+			}
+			if (modifiedLevel >= 24 && modifiedLevel <= 74) {
 				addWeights(2, "Fortune II");
-			} else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
+			}
+			if (modifiedLevel >= 15 && modifiedLevel <= 65) {
 				addWeights(2, "Fortune I");
 			}
 			
 			if (modifiedLevel >= 41 && modifiedLevel <= 56) {
 				addWeights(10, "Power V");
-			} else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
+			}
+			if (modifiedLevel >= 31 && modifiedLevel <= 46) {
 				addWeights(10, "Power IV");
-			} else if (modifiedLevel >= 21 && modifiedLevel <= 36) {
+			}
+			if (modifiedLevel >= 21 && modifiedLevel <= 36) {
 				addWeights(10, "Power III");
-			} else if (modifiedLevel >= 11 && modifiedLevel <= 26) {
+			}
+			if (modifiedLevel >= 11 && modifiedLevel <= 26) {
 				addWeights(10, "Power II");
-			} else if (modifiedLevel >= 1 && modifiedLevel <= 16) {
+			}
+			if (modifiedLevel >= 1 && modifiedLevel <= 16) {
 				addWeights(10, "Power I");
 			}
 			
 			if (modifiedLevel >= 32 && modifiedLevel <= 57) {
 				addWeights(2, "Punch II");
-			} else if (modifiedLevel >= 12 && modifiedLevel <= 37) {
+			}
+			if (modifiedLevel >= 12 && modifiedLevel <= 37) {
 				addWeights(2, "Punch I");
 			}
 			
@@ -991,7 +1075,8 @@ function calc(mat, tool, level) {
     		writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
     		writeLineToOutput ("");
     		writeLineToOutput ("If you get more than one enchant, you have a higher chance of getting enchants other than the one you currently have.");
-    		writeLineToOutput ("For example, you can't get Sharpness twice on a single sword, instead, Minecraft will pick another enchant.");
+    		writeLineToOutput ("For example, you can't get Sharpness twice on a single sword, instead, Minecraft will pick another enchant,");
+    		writeLineToOutput ("this means enchantments with lower probabilities can be easier to get, as long as you get another enchant first.");
 		}
 		
 		if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
