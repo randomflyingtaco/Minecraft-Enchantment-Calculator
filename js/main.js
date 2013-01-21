@@ -235,6 +235,17 @@ $(function() {
         });
     });
     
+    // Show patchnotes on mouse over
+    $("#version").mouseover(function() {
+        $("#patchnotes").css("visibility", "visible");
+        $("#patchnotes").css("top", $("#version").position().top - $("#patchnotes").height() - 23);
+        $("#patchnotes").css("left", $("#version").position().left);
+    });
+    
+    $("#version").mouseout(function() {
+        $("#patchnotes").css("visibility", "hidden");
+    });
+    
     // Update list of enchants
     updateEnchType ();
     
