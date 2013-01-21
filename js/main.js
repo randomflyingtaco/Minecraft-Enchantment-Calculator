@@ -239,7 +239,7 @@ $(function() {
     $("#version").mouseover(function() {
         $("#patchnotes").css("visibility", "visible");
         $("#patchnotes").css("top", $("#version").position().top - $("#patchnotes").height() - 23);
-        $("#patchnotes").css("left", $("#version").position().left);
+        $("#patchnotes").css("left", $("#version").position().left - 85);
     });
     
     $("#version").mouseout(function() {
@@ -970,14 +970,6 @@ function calc(mat, tool, level) {
                 addWeights(2, "Flame I");
             }
         }
-    
-        /*
-         -  Divide the modified level in half, rounded down.
-         -  With probability (modified level + 1) / 50, keep going.
-         -  Remove from the list of possible enchantments anything that conflicts with previously-chosen enchantments.
-         -  Pick one enchantment from the remaining possible enchantments (based on the weights, as before) and apply it to the item.
-         -  Repeat from step 1.
-        */
         
         var toolEnchantLineNumber = 0;
         var currentEnchantLine = "";
