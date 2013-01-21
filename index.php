@@ -1,3 +1,14 @@
+<?
+
+    $patch_note_xml = simplexml_load_file("version_info.xml");
+    $version_info = $patch_note_xml["vinfo"];
+    $patch_notes = "";
+    
+    foreach ($patch_note_xml->children() as $patch_note_line) {
+        $patch_notes = $patch_notes . "<li>" . $patch_note_line . "</li>";
+    }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]> ../80DC340E-E976-4C12-A039-0E456D6361BC/main.css        <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
@@ -27,16 +38,14 @@
         <div id="patchnotes">
             <h1>Patch Notes</h1>
             <ul>
-                <li>Added supports items with more than one enchant</li>
-                <li>Improved accuracy</li>
-                <li>Added this box for patch notes</li>
+                <?=$patch_notes?>
             </ul>
             <div id="patchnotearrow"></div>
         </div>
         <div id="title">
         	<img src="img/logo.png" alt="" id="logo" />
         	Minecraft Enchantment Calculator
-        	<div id="version">v2.2 (Works with 1.4.7!)</div>
+        	<div id="version"><?=$version_info?></div>
         </div>
         <div id="main_window">
         	<div id="normal_calc">
