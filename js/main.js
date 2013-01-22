@@ -1089,10 +1089,6 @@ function calc(mat, tool, level) {
             writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 3rd enchant.");
             avglevel = Math.floor(avglevel / 2);
             writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
-            writeLineToOutput ("");
-            writeLineToOutput ("If you get more than one enchant, you have a higher chance of getting enchants other than the one you currently have.");
-            writeLineToOutput ("For example, you can't get Sharpness twice on a single sword, instead, Minecraft will pick another enchant,");
-            writeLineToOutput ("this means enchantments with lower probabilities can be easier to get, as long as you get another enchant first.");
         }
         
         if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
