@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<version vinfo="v2.2 (Improved Accuracy!)">
+    <patchnote>Added support for items with more than one enchant</patchnote>
+    <patchnote>Improved accuracy</patchnote>
+    <patchnote>Added this box for patch notes</patchnote>
+</version>
