@@ -43,104 +43,6 @@
             <div id="patchnotearrow"></div>
         </div>
         <div id="title">
-<<<<<<< HEAD:index.html
-        	<img src="img/logo.png" alt="" id="logo" />Minecraft Enchantment Calculator <span id="version">v2.1 (Books are here!)</span>
-        </div>
-        <div id="main_window">
-        	<div id="normal_calc">
-		        What enchants can I get on a
-		        <select id="material">
-					<option value="chain">Chain</option>
-					<option value="diamond" selected="yes">Diamond</option>
-					<option value="gold">Gold</option>
-					<option value="iron">Iron</option>
-					<option value="leather">Leather</option>
-					<option value="stone">Stone</option>
-					<option value="wood">Wood</option>
-					<option value="book">Book</option>
-		        </select>
-		        <select id="tool">
-					<option value="axe">Axe</option>
-					<option value="boots">Boots</option>
-					<option value="bow">Bow</option>
-					<option value="chestplate">Chest Plate</option>
-					<option value="helmet">Helmet</option>
-					<option value="leggings">Leggings</option>
-					<option value="pickaxe" selected="yes">Pickaxe</option>
-					<option value="shovel">Shovel</option>
-					<option value="sword">Sword</option>
-					<option value="book">(Book)</option>
-		        </select>
-		        <br />
-		        at level
-		        <input type="text" id="level" maxlength="2" value="30" />
-		        ?
-		        <input type="button" id="calc" value="Calculate..." />
-        	</div>
-        	<div id="or">
-        		- Or -
-        	</div>
-        	<div id="reverse_calc">
-        		What is the best level to get
-        		<select id="enchant">
-        			<option value="aquaaffinity">Aqua Affinity</option>
-        			<option value="boa">Bane of Arthropods</option>
-        			<option value="blastprot">Blast Protection</option>
-        			<option value="efficiency">Efficiency</option>
-        			<option value="featherfalling">Feather Falling</option>
-        			<option value="fireaspect">Fire Aspect</option>
-        			<option value="fireprot">Fire Protection</option>
-        			<option value="flame">Flame</option>
-        			<option value="fortune">Fortune</option>
-        			<option value="infinity">Infinity</option>
-        			<option value="knockback">Knockback</option>
-        			<option value="looting">Looting</option>
-        			<option value="power">Power</option>
-        			<option value="projprot">Projectile Protection</option>
-        			<option value="protection">Protection</option>
-        			<option value="punch">Punch</option>
-        			<option value="respiration">Respiration</option>
-        			<option value="sharpness" selected="yes">Sharpness</option>
-        			<option value="silktouch">Silk Touch</option>
-        			<option value="smite">Smite</option>
-        			<option value="thorns">Thorns</option>
-        			<option value="unbreaking">Unbreaking</option>
-        		</select>
-        		<select id="enchlevel">
-        			<option value="1">I</option>
-        			<option value="2">II</option>
-        			<option value="3">III</option>
-        			<option value="4" selected="yes">IV</option>
-        			<option value="5">V</option>
-        		</select>
-        		<br />
-        		on a
-        		<select id="revmaterial">
-					<option value="chain">Chain</option>
-					<option value="diamond" selected="yes">Diamond</option>
-					<option value="gold">Gold</option>
-					<option value="iron">Iron</option>
-					<option value="leather">Leather</option>
-					<option value="stone">Stone</option>
-					<option value="wood">Wood</option>
-					<option value="book">Book</option>
-		        </select>
-		        <select id="revtool">
-					<option value="axe">Axe</option>
-					<option value="boots">Boots</option>
-					<option value="bow">Bow</option>
-					<option value="chestplate">Chest Plate</option>
-					<option value="helmet">Helmet</option>
-					<option value="leggings">Leggings</option>
-					<option value="pickaxe">Pickaxe</option>
-					<option value="shovel">Shovel</option>
-					<option value="sword" selected="yes">Sword</option>
-					<option value="book">(Book)</option>
-		        </select>
-		        ?
-		        <input type="button" id="revcalc" value="Calculate..." />
-        	</div>
-=======
             <img src="img/logo.png" alt="" id="logo" />
             Minecraft Enchantment Calculator
             <div id="version"><?=$version_info?></div>
@@ -239,7 +141,6 @@
                 ?
                 <input type="button" id="revcalc" value="Calculate..." />
             </div>
->>>>>>> 2.2-(MultiEnchant):index.php
         </div>
         <div id="result">
         </div>
