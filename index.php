@@ -28,7 +28,7 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic+Slab">
         <script src="js/cufon-yui.js"></script>
         <script src="js/antic_slab_400.font.js"></script>
-        
+        <link rel="shortcut icon" href="/favicon.ico" />
     </head>
     <body>
         <!--[if lt IE 7]>
