@@ -158,6 +158,7 @@ $(function() {
     
     */
     $("#calc").click(function(){
+        _gaq.push(['_trackEvent', 'Calculate', 'Calculate Level ' + $("#level").val() + ' on a ' + $("#material").val() + ' ' + $("#tool").val()]);
         $("#main_window").css("border-bottom", "solid 1px #aaaaaa");
         $("#result").css("border-top", "solid 1px #eeeeee");
         $("#reverse_calc").animate({
@@ -199,6 +200,7 @@ $(function() {
     
     */
     $("#revcalc").click(function(){
+        _gaq.push(['_trackEvent', 'Calculate', 'Reverse Calculate: ' + $("#enchant option:selected").text() + ' ' + $("#enchlevel option:selected").text() + " on a " + $("#revmaterial").val() + ' ' + $("#revtool").val()]);
         $("#main_window").css("border-bottom", "solid 1px #aaaaaa");
         $("#result").css("border-top", "solid 1px #eeeeee");
         $("#normal_calc").animate({
@@ -251,6 +253,7 @@ $(function() {
     // Handles quick codes if the url contains one
     if (window.location.hash.replace("#", "") != "") {
         var quickCode = window.location.hash.replace("#", "");
+        _gaq.push(['_trackEvent', 'QuickCode', 'Code ' + quickCode]);
         if (quickCode.charAt(0) == "1") {
             console.debug("Type 1 quick code detected. " + quickCode);
             $("#material option").eq(parseInt(quickCode.charAt(1))).attr("selected", "selected");
