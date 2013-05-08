@@ -153,6 +153,11 @@
                 <br />
                 Have a feature request?&nbsp;&nbsp;
                 <a href="http://www.twitter.com/ProtoMowsh">Tweet @ProtoMowsh</a>
+                <br />
+                <br />
+                View the uncompressed
+                <a href="https://github.com/Mowsh/Minecraft-Enchantment-Calculator">source code</a>
+                on github.
             </div>
             <div id="gplus">
                 <!-- Google Plus -->
