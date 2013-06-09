@@ -498,8 +498,6 @@ function revCalc (enchantName, mat, tool) {
         writeLineToOutput ("Thorns III is almost impossible to create, and can only be obtained on a gold chestplate at less than a 0.1% chance at level 30.");
         writeLineToOutput ("Use Thorns II for now.");
         writeLineToOutput ("");
-        writeLineToOutput ("If you have any information (such as the enchantment weight of Thorns) please tweet me.  @protomowsh");
-        writeLineToOutput ("");
     }
 
 
@@ -743,24 +741,24 @@ function calc(mat, tool, level) {
                     addWeights(2, "Aqua Affinity I");
                 }
             }
-            
-            if (tool == "chestplate") {  // FIXME: Thorns enchantment weight is unconfirmed, 5 seems correct though
+
+            if (tool == "chestplate") {
                 if (modifiedLevel >= 50 && modifiedLevel <= 100) {
-                    addWeights(5, "Thorns III");
+                    addWeights(1, "Thorns III");
                 } else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
-                    addWeights(5, "Thorns II");
+                    addWeights(1, "Thorns II");
                 } else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
-                    addWeights(5, "Thorns I");
+                    addWeights(1, "Thorns I");
                 }
             }
         } else if (tool == "book") {
             // Books can get every enchant
             if (modifiedLevel >= 50 && modifiedLevel <= 100) {
-                addWeights(5, "Thorns III");
+                addWeights(1, "Thorns III");
             } else if (modifiedLevel >= 30 && modifiedLevel <= 80) {
-                addWeights(5, "Thorns II");
+                addWeights(1, "Thorns II");
             } else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
-                addWeights(5, "Thorns I");
+                addWeights(1, "Thorns I");
             }
 
             if (modifiedLevel >= 30 && modifiedLevel <= 60) {
