@@ -18,7 +18,7 @@ $(function() {
     po.src = 'https://apis.google.com/js/plusone.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
 
-    // Cufon init for font antialiasing 
+    // Cufon init for font antialiasing
     Cufon.now();
     Cufon.replace($("#title"));
     Cufon.replace($("#normal_calc"));
@@ -26,14 +26,14 @@ $(function() {
     Cufon.replace($("#result"));
 
     /*
-        
+
         Function called when the main calculator's material is changed, keeps tools and materials valid
-        
+
     */
     $("#material").change(function(){
         var mat = $("#material").val();
         var tool = $("#tool").val();
-        
+
         if (tool == "bow" && mat != "wood") {  // Check for bow
             if (mat == "leather" || mat == "chain") {
                 $("#tool").val("chestplate");
@@ -54,16 +54,16 @@ $(function() {
             $("#tool").val("chestplate");
         }
     });
-    
+
     /*
-        
+
         Function called when the main calculator's tool is changed, keeps tools and materials valid
-        
+
     */
     $("#tool").change(function(){
         var mat = $("#material").val();
         var tool = $("#tool").val();
-        
+
         if (tool == "bow" && mat != "wood") {  // Check for bow
             $("#material").val("wood");
         } else if (tool == "book" && mat != "book") {  // Check for book
@@ -74,16 +74,16 @@ $(function() {
             $("#material").val("diamond");
         }
     });
-    
+
     /*
-        
+
         Function called when the 2nd calculator's material is changed, keeps tools and materials valid
-        
+
     */
     $("#revmaterial").change(function(){
         var mat = $("#revmaterial").val();
         var tool = $("#revtool").val();
-        
+
         if (tool == "bow" && mat != "wood") {  // Check for bow
             if (mat == "leather" || mat == "chain") {
                 $("#revtool").val("chestplate");
@@ -103,20 +103,20 @@ $(function() {
         } else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
             $("#revtool").val("chestplate");
         }
-        
+
         // Change enchantment type depending on weapon
         updateEnchType ();
     });
-    
+
     /*
-        
+
         Function called when the 2nd calculator's tool is changed, keeps tools and materials valid
-        
+
     */
     $("#revtool").change(function(){
         var mat = $("#revmaterial").val();
         var tool = $("#revtool").val();
-        
+
         if (tool == "bow" && mat != "wood") {  // Check for bow
             $("#revmaterial").val("wood");
         } else if (tool == "book" && mat != "book") {  // Check for book
@@ -126,15 +126,15 @@ $(function() {
         } else if ((tool == "axe" || tool == "sword" || tool == "pickaxe" || tool == "shovel") && !(mat == "iron" || mat == "gold" || mat == "diamond" || mat == "stone" || mat == "wood")) {  // Check for tools
             $("#revmaterial").val("diamond");
         }
-        
+
         // Change enchanting type depending on weapon
         updateEnchType ();
     });
-    
+
     /*
-    
+
         Function called while typing in a level, ensures input is a number between 1 and 30
-    
+
     */
     $("#level").keyup(function(){
         $("#level").val($("#level").val().replace(/[^0-9]/g,''));
@@ -144,18 +144,18 @@ $(function() {
             $("#level").val("1");
         }
     });
-    
+
     /*
-    
+
         Function changes the enchant levels whenever a different enchant is chosen
-    
+
     */
     $("#enchant").change(changeEnchLevels);
-    
+
     /*
-    
+
         When the user clicks the calculate button
-    
+
     */
     $("#calc").click(function(){
         _gaq.push(['_trackEvent', 'Calculate', 'Calculate Level ' + $("#level").val() + ' on a ' + $("#material").val() + ' ' + $("#tool").val()]);
@@ -193,11 +193,11 @@ $(function() {
             });
         });
     });
-    
+
     /*
-    
+
         Calculate button click for 2nd calculator
-    
+
     */
     $("#revcalc").click(function(){
         _gaq.push(['_trackEvent', 'Calculate', 'Reverse Calculate: ' + $("#enchant option:selected").text() + ' ' + $("#enchlevel option:selected").text() + " on a " + $("#revmaterial").val() + ' ' + $("#revtool").val()]);
@@ -235,21 +235,21 @@ $(function() {
             });
         });
     });
-    
+
     // Show patchnotes on mouse over
     $("#version").mouseover(function() {
         $("#patchnotes").css("visibility", "visible");
         $("#patchnotes").css("top", $("#version").position().top - $("#patchnotes").height() - 23);
         $("#patchnotes").css("left", $("#version").position().left - 85);
     });
-    
+
     $("#version").mouseout(function() {
         $("#patchnotes").css("visibility", "hidden");
     });
-    
+
     // Update list of enchants
     updateEnchType ();
-    
+
     // Handles quick codes if the url contains one
     if (window.location.hash.replace("#", "") != "") {
         var quickCode = window.location.hash.replace("#", "");
@@ -306,15 +306,15 @@ function updateEnchType () {
     } else {
         newEnchType = $("#revtool").val();
     }
-    
+
     if (newEnchType == currentEnchType) {
         return;  // Stops the browser from resetting values whenever a different piece of armour with the same enchant is chosen
     } else {
         currentEnchType = newEnchType;
     }
-    
+
     var newOptions;
-    
+
     if (newEnchType == "book") {
         newOptions = {"Aqua Affinity": "aquaaffinity",
           "Bane of Arthropods": "boa",
@@ -388,7 +388,7 @@ function updateEnchType () {
           "Respiration": "respiration"
         };
     }
-    
+
     // Applies new key value pairs to the list of enchants
     var $el = $("#enchant");
     $el.empty();
@@ -396,7 +396,7 @@ function updateEnchType () {
       $el.append($("<option></option>")
          .attr("value", value).text(key));
     });
-    
+
     changeEnchLevels();  // Updates newly selected enchant's possible levels
 }
 
@@ -408,7 +408,7 @@ function updateEnchType () {
 function changeEnchLevels() {
     var enchName = $("#enchant").val();
     var newLvOptions;
-    
+
     if (enchName == "sharpness" || enchName == "smite" || enchName == "boa" || enchName == "efficiency" || enchName == "power") {
         newLvOptions = {"IV": "4",  // 4 before 5, because 5 is impossible to get on anything useful
           "V": "5",
@@ -434,7 +434,7 @@ function changeEnchLevels() {
     } else if (enchName == "flame" || enchName == "infinity" || enchName == "silktouch" || enchName == "aquaaffinity") {
         newLvOptions = {"I": "1"};
     }
-    
+
     // Applies the new key value pairs to the list of levels
     var $el = $("#enchlevel");
     $el.empty();
@@ -478,20 +478,20 @@ function revCalc (enchantName, mat, tool) {
     } else {
         writeLineToOutput ("Possible levels for a " + enchantName + " " + mat + " " + tool + "...");
     }
-    
+
     // Show errors for impossible enchants
     if (enchantName == "Power V") {
         writeLineToOutput ("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
         return;
     }
-    
+
     if (enchantName == "Sharpness V" && mat != "gold") {
         writeLineToOutput ("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
         return;
     }
-    
+
     // Notice about Thorns III being pretty much impossible
-    
+
     if (enchantName == "Thorns III") {
         writeLineToOutput ("");
         writeLineToOutput ("IMPORTANT NOTICE ABOUT THORNS III:");
@@ -501,15 +501,15 @@ function revCalc (enchantName, mat, tool) {
         writeLineToOutput ("If you have any information (such as the enchantment weight of Thorns) please tweet me.  @protomowsh");
         writeLineToOutput ("");
     }
-    
-    
+
+
     // Run calculation once for each level
     enchantWanted = enchantName;
     isRecordingEnchants = true;
     for (var level = 1; level <= 30; level++) {
         calc(mat, tool, level);
     }
-    
+
     // Write each level to the output
     for (var index in recordedEnchant) {
         if(isNaN(recordedEnchant[index])) {
@@ -532,7 +532,7 @@ function revCalc (enchantName, mat, tool) {
 */
 function calc(mat, tool, level) {
     enchantsReceived = new Object();
-    
+
     // Set enchantability value of each tool
     if (tool == "bow" || tool == "book") {
         enchantability = 1;
@@ -561,17 +561,17 @@ function calc(mat, tool, level) {
             enchantability = 25;
         }
     }
-    
+
     // Calculator runs 10,000 times currently (depending on precision value, higher takes longer and sometimes doesn't even finish), works out the average chance for each enchant
     for (var i = 0; i < precision; i++) {
         possibleEnchants = new Array();
-        
+
         // Randomisation which actually picks the enchant
         modifiedLevel = parseInt(level) + Math.floor(Math.random() * (enchantability / 4 + 1)) + Math.floor(Math.random() * (enchantability / 4 + 1)) + 1;
         modifiedLevel = Math.floor(modifiedLevel * ((Math.random() + Math.random() - 1) * 0.15 + 1) + 0.5);
-        
+
         // Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
-    
+
         if (tool == "bow") {
             if (modifiedLevel >= 41 && modifiedLevel <= 56) {
                 addWeights(10, "Power V");
@@ -584,13 +584,13 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 16) {
                 addWeights(10, "Power I");
             }
-            
+
             if (modifiedLevel >= 32 && modifiedLevel <= 57) {
                 addWeights(2, "Punch II");
             } else if (modifiedLevel >= 12 && modifiedLevel <= 37) {
                 addWeights(2, "Punch I");
             }
-            
+
             if (modifiedLevel >= 20 && modifiedLevel <= 50) {
                 addWeights(1, "Infinity I");
                 addWeights(2, "Flame I");
@@ -607,11 +607,11 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 51) {
                 addWeights(10, "Efficiency I");
             }
-            
+
             if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(1, "Silk Touch I");
             }
-            
+
             if (modifiedLevel >= 21 && modifiedLevel <= 71) {
                 addWeights(5, "Unbreaking III");
             } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
@@ -619,7 +619,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
                 addWeights(5, "Unbreaking I");
             }
-            
+
             if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(2, "Fortune III");
             } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
@@ -639,7 +639,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
                 addWeights(10, "Sharpness I");
             }
-            
+
             if (modifiedLevel >= 37 && modifiedLevel <= 57) {
                 addWeights(5, "Smite V");
                 addWeights(5, "Bane of Arthropods V");
@@ -656,19 +656,19 @@ function calc(mat, tool, level) {
                 addWeights(5, "Smite I");
                 addWeights(5, "Bane of Arthropods I");
             }
-            
+
             if (modifiedLevel >= 25 && modifiedLevel <= 75) {
                 addWeights(5, "Knockback II");
             } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
                 addWeights(5, "Knockback I");
             }
-            
+
             if (modifiedLevel >= 30 && modifiedLevel <= 80) {
                 addWeights(2, "Fire Aspect II");
             } else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
                 addWeights(2, "Fire Aspect I");
             }
-            
+
             if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(2, "Looting III");
             } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
@@ -686,7 +686,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
                 addWeights(10, "Protection I");
             }
-            
+
             if (modifiedLevel >= 34 && modifiedLevel <= 46) {
                 addWeights(5, "Fire Protection IV");
             } else if (modifiedLevel >= 26 && modifiedLevel <= 38) {
@@ -696,7 +696,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 10 && modifiedLevel <= 22) {
                 addWeights(5, "Fire Protection I");
             }
-            
+
             if (modifiedLevel >= 29 && modifiedLevel <= 41) {
                 addWeights(2, "Blast Protection IV");
             } else if (modifiedLevel >= 21 && modifiedLevel <= 33) {
@@ -706,7 +706,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 5 && modifiedLevel <= 17) {
                 addWeights(2, "Blast Protection I");
             }
-            
+
             if (modifiedLevel >= 21 && modifiedLevel <= 36) {
                 addWeights(5, "Projectile Protection IV");
             } else if (modifiedLevel >= 15 && modifiedLevel <= 30) {
@@ -716,7 +716,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
                 addWeights(5, "Projectile Protection I");
             }
-            
+
             // Extra enchants for boots and helmets
             if (tool == "boots") {
                 if (modifiedLevel >= 23 && modifiedLevel <= 33) {
@@ -729,7 +729,7 @@ function calc(mat, tool, level) {
                     addWeights(5, "Feather Falling I");
                 }
             }
-            
+
             if (tool == "helmet") {
                 if (modifiedLevel >= 30 && modifiedLevel <= 60) {
                     addWeights(2, "Respiration III");
@@ -738,7 +738,7 @@ function calc(mat, tool, level) {
                 } else if (modifiedLevel >= 10 && modifiedLevel <= 40) {
                     addWeights(2, "Respiration I");
                 }
-                
+
                 if (modifiedLevel >= 1 && modifiedLevel <= 41) {
                     addWeights(2, "Aqua Affinity I");
                 }
@@ -762,7 +762,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
                 addWeights(5, "Thorns I");
             }
-            
+
             if (modifiedLevel >= 30 && modifiedLevel <= 60) {
                 addWeights(2, "Respiration III");
             } else if (modifiedLevel >= 20 && modifiedLevel <= 50) {
@@ -770,11 +770,11 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 10 && modifiedLevel <= 40) {
                 addWeights(2, "Respiration I");
             }
-            
+
             if (modifiedLevel >= 1 && modifiedLevel <= 41) {
                 addWeights(2, "Aqua Affinity I");
             }
-            
+
             if (modifiedLevel >= 23 && modifiedLevel <= 33) {
                 addWeights(5, "Feather Falling IV");
             } else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
@@ -784,7 +784,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 5 && modifiedLevel <= 15) {
                 addWeights(5, "Feather Falling I");
             }
-            
+
             if (modifiedLevel >= 34 && modifiedLevel <= 54) {
                 addWeights(10, "Protection IV");
             } else if (modifiedLevel >= 23 && modifiedLevel <= 43) {
@@ -794,7 +794,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
                 addWeights(10, "Protection I");
             }
-            
+
             if (modifiedLevel >= 34 && modifiedLevel <= 46) {
                 addWeights(5, "Fire Protection IV");
             } else if (modifiedLevel >= 26 && modifiedLevel <= 38) {
@@ -804,7 +804,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 10 && modifiedLevel <= 22) {
                 addWeights(5, "Fire Protection I");
             }
-            
+
             if (modifiedLevel >= 29 && modifiedLevel <= 41) {
                 addWeights(2, "Blast Protection IV");
             } else if (modifiedLevel >= 21 && modifiedLevel <= 33) {
@@ -814,7 +814,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 5 && modifiedLevel <= 17) {
                 addWeights(2, "Blast Protection I");
             }
-            
+
             if (modifiedLevel >= 21 && modifiedLevel <= 36) {
                 addWeights(5, "Projectile Protection IV");
             } else if (modifiedLevel >= 15 && modifiedLevel <= 30) {
@@ -824,7 +824,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
                 addWeights(5, "Projectile Protection I");
             }
-            
+
             if (modifiedLevel >= 45 && modifiedLevel <= 65) {
                 addWeights(10, "Sharpness V");
             } else if (modifiedLevel >= 34 && modifiedLevel <= 54) {
@@ -836,7 +836,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 21) {
                 addWeights(10, "Sharpness I");
             }
-            
+
             if (modifiedLevel >= 37 && modifiedLevel <= 57) {
                 addWeights(5, "Smite V");
                 addWeights(5, "Bane of Arthropods V");
@@ -853,19 +853,19 @@ function calc(mat, tool, level) {
                 addWeights(5, "Smite I");
                 addWeights(5, "Bane of Arthropods I");
             }
-            
+
             if (modifiedLevel >= 25 && modifiedLevel <= 75) {
                 addWeights(5, "Knockback II");
             } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
                 addWeights(5, "Knockback I");
             }
-            
+
             if (modifiedLevel >= 30 && modifiedLevel <= 80) {
                 addWeights(2, "Fire Aspect II");
             } else if (modifiedLevel >= 10 && modifiedLevel <= 60) {
                 addWeights(2, "Fire Aspect I");
             }
-            
+
             if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(2, "Looting III");
             } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
@@ -873,7 +873,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(2, "Looting I");
             }
-            
+
             if (modifiedLevel >= 41 && modifiedLevel <= 91) {
                 addWeights(10, "Efficiency V");
             } else if (modifiedLevel >= 31 && modifiedLevel <= 81) {
@@ -885,11 +885,11 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 51) {
                 addWeights(10, "Efficiency I");
             }
-            
+
             if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(1, "Silk Touch I");
             }
-            
+
             if (modifiedLevel >= 21 && modifiedLevel <= 71) {
                 addWeights(5, "Unbreaking III");
             } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
@@ -897,7 +897,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
                 addWeights(5, "Unbreaking I");
             }
-            
+
             if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(2, "Fortune III");
             } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
@@ -905,7 +905,7 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(2, "Fortune I");
             }
-            
+
             if (modifiedLevel >= 41 && modifiedLevel <= 56) {
                 addWeights(10, "Power V");
             } else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
@@ -917,19 +917,19 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 1 && modifiedLevel <= 16) {
                 addWeights(10, "Power I");
             }
-            
+
             if (modifiedLevel >= 32 && modifiedLevel <= 57) {
                 addWeights(2, "Punch II");
             } else if (modifiedLevel >= 12 && modifiedLevel <= 37) {
                 addWeights(2, "Punch I");
             }
-            
+
             if (modifiedLevel >= 20 && modifiedLevel <= 50) {
                 addWeights(1, "Infinity I");
                 addWeights(2, "Flame I");
             }
         }
-        
+
         var toolEnchantLineNumber = 0;
         var currentEnchantLine = "";
         while (true) {
@@ -938,7 +938,7 @@ function calc(mat, tool, level) {
             if (possibleEnchants.length == 0) {
                 break;
             }
-            
+
             // Randomly picks an enchant from the list
             var randEnchant = Math.floor(Math.random()*possibleEnchants.length);
             currentEnchantLine = possibleEnchants[randEnchant];
@@ -946,19 +946,19 @@ function calc(mat, tool, level) {
                 enchantsReceived[possibleEnchants[randEnchant]] = 0;
             }
             enchantsReceived[possibleEnchants[randEnchant]]++;
-            
+
             // Possibly adds another line of enchants
             modifiedLevel = Math.floor(modifiedLevel / 2);
             if (Math.random() <= (modifiedLevel + 1) / 50 && toolEnchantLineNumber < 4 && tool != "book") {
                 // Remove any conflicting enchants from the possibleEnchants
-                
-                for (var possibleEnchantIndex = possibleEnchants.length - 1; possibleEnchantIndex >= 0; possibleEnchantIndex--) {                    
+
+                for (var possibleEnchantIndex = possibleEnchants.length - 1; possibleEnchantIndex >= 0; possibleEnchantIndex--) {
                     // Don't get same enchant twice
                     if(possibleEnchants[possibleEnchantIndex].indexOf(currentEnchantLine.substring(0, 5)) == 0){
                         possibleEnchants.splice(possibleEnchantIndex,1);
                         continue;
                     }
-                    
+
                     // Remove Protection, Fire Protection, Blast Protection, Projectile Protection
                     if (currentEnchantLine.indexOf("Protection") > -1) {
                             if(possibleEnchants[possibleEnchantIndex].indexOf("Protection") > -1){
@@ -966,7 +966,7 @@ function calc(mat, tool, level) {
                                 continue;
                             }
                     }
-                    
+
                     // Remove Sharpness, Bane, Smite
                     if (currentEnchantLine.indexOf("Sharpness") > -1 || currentEnchantLine.indexOf("Bane of Arthropods") > -1 || currentEnchantLine.indexOf("Smite") > -1) {
                             if(possibleEnchants[possibleEnchantIndex].indexOf("Sharpness") > -1 || possibleEnchants[possibleEnchantIndex].indexOf("Bane of Arthropods") > -1 || possibleEnchants[possibleEnchantIndex].indexOf("Smite") > -1) {
@@ -974,7 +974,7 @@ function calc(mat, tool, level) {
                                 continue;
                             }
                     }
-                    
+
                     // Remove Silk Touch and Fortune
                     if (currentEnchantLine.indexOf("Silk Touch") > -1 || currentEnchantLine.indexOf("Fortune") > -1) {
                         if(possibleEnchants[possibleEnchantIndex].indexOf("Silk Touch") > -1 || possibleEnchants[possibleEnchantIndex].indexOf("Fortune") > -1) {
@@ -988,7 +988,7 @@ function calc(mat, tool, level) {
             }
         }
     }
-    
+
     // If this is the main calculator, write the results, otherwise add the probability of receiving the wanted enchant for this level to the recordedEnchant list
     if (!isRecordingEnchants) {
         var enchNameArray = new Array();
@@ -1002,18 +1002,18 @@ function calc(mat, tool, level) {
         } else {
             writeLineToOutput ("Possible enchants for " + mat + " " + tool + " at level " + level + "...");
         }
-        
+
         // Creates an array for names and probabilieies, changes probabilities to percentages
         for (var index in enchantsReceived) {
             enchNameArray.push(index);
             enchProbArray.push(enchantsReceived[index] / precision * 100)
         }
-        
+
         // Reorders enchants in order of highest probability
         var foundOne = true;
         var tempName;
         var tempProb;
-        
+
         while (foundOne) {
             foundOne = false;
             for(var sortIndex = 0; sortIndex < enchProbArray.length - 1; sortIndex++) {
@@ -1028,7 +1028,7 @@ function calc(mat, tool, level) {
                 }
             }
         }
-        
+
         // Write each enchant to the output
         for (var outputIndex = 0; outputIndex < enchNameArray.length; outputIndex++) {
             enchProbArray[outputIndex] = Math.floor(enchProbArray[outputIndex] * 10) / 10;  // Round probabilities to 2 decimal places
@@ -1038,7 +1038,7 @@ function calc(mat, tool, level) {
                 writeLineToOutput (enchNameArray[outputIndex] + ": " + enchProbArray[outputIndex] + "%");
             }
         }
-        
+
         // Write extra info such as chances of getting an extra enchant, and special item information
         if (tool != "book") {
             var avglevel = level
@@ -1050,7 +1050,7 @@ function calc(mat, tool, level) {
             avglevel = Math.floor(avglevel / 2);
             writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
         }
-        
+
         if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Silk Touch and Fortune on the same tool.");
