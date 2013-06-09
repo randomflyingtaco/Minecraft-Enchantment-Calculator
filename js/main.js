@@ -10,6 +10,7 @@ var precision = 10000;
 var isRecordingEnchants = false;
 var enchantWanted;
 var recordedEnchant = new Object();
+var endPrecision = 0;
 
 // onPageLoad
 $(function() {
@@ -470,7 +471,7 @@ function addWeights (weight, newEnchant) {
 
 */
 function revCalc (enchantName, mat, tool) {
-    writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
+    writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
     writeLineToOutput ("");
     writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
     if (mat == "book") {
@@ -932,7 +933,8 @@ function calc(mat, tool, level) {
         var currentEnchantLine = "";
         while (true) {
             toolEnchantLineNumber++;
-            
+            endPrecision++;
+
             if (possibleEnchants.length == 0) {
                 break;
             }
@@ -991,8 +993,8 @@ function calc(mat, tool, level) {
     if (!isRecordingEnchants) {
         var enchNameArray = new Array();
         var enchProbArray = new Array();
-        
-        writeLineToOutput ("Minecraft Enchanting Calculator 2.1 - http://www.minecraftenchantmentcalculator.com/");
+
+        writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
         writeLineToOutput ("");
         writeLineToOutput ("Output log:  (This output was calculated 10,000 times, but results may still vary)");
         if (mat == "book") {
@@ -1004,7 +1006,7 @@ function calc(mat, tool, level) {
         // Creates an array for names and probabilieies, changes probabilities to percentages
         for (var index in enchantsReceived) {
             enchNameArray.push(index);
-            enchProbArray.push(enchantsReceived[index] / precision * 100)
+            enchProbArray.push(enchantsReceived[index] / endPrecision * 100)
         }
 
         // Reorders enchants in order of highest probability
@@ -1063,6 +1065,6 @@ function calc(mat, tool, level) {
             writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
         }
     } else {
-        recordedEnchant[level] = enchantsReceived[enchantWanted] / precision * 100;
+        recordedEnchant[level] = enchantsReceived[enchantWanted] / endPrecision * 100;
     }
 }
