@@ -1044,12 +1044,12 @@ function calc(mat, tool, level) {
         if (tool != "book") {
             var avglevel = level
             writeLineToOutput ("");
-            avglevel = Math.floor(avglevel / 2);
-            writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 2nd enchant.");
-            avglevel = Math.floor(avglevel / 2);
-            writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 3rd enchant.");
-            avglevel = Math.floor(avglevel / 2);
-            writeLineToOutput ("You have a " + Math.floor((avglevel + 1)/50*100) + "% chance of getting a 4th enchant.");
+            avglevel = avglevel / 2;
+            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 2nd enchant.");
+            avglevel = avglevel / 2;
+            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 3rd enchant.");
+            avglevel = avglevel / 2;
+            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 4th enchant.");
         }
 
         if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
