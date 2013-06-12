@@ -566,7 +566,7 @@ function calc(mat, tool, level) {
         possibleEnchants = new Array();
 
         // Randomisation which actually picks the enchant
-        modifiedLevel = parseInt(level) + Math.floor(Math.random() * (enchantability / 4 + 1)) + Math.floor(Math.random() * (enchantability / 4 + 1)) + 1;
+        modifiedLevel = parseInt(level) + Math.floor(Math.random() * (Math.floor(enchantability / 4) + 1)) + Math.floor(Math.random() * (Math.floor(enchantability / 4) + 1)) + 1;
         modifiedLevel = Math.floor(modifiedLevel * ((Math.random() + Math.random() - 1) * 0.15 + 1) + 0.5);
 
         // Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
