@@ -531,6 +531,7 @@ function revCalc (enchantName, mat, tool) {
 */
 function calc(mat, tool, level) {
     enchantsReceived = new Object();
+    endPrecision = 0;
 
     // Set enchantability value of each tool
     if (tool == "bow" || tool == "book") {
