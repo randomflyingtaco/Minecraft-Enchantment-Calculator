@@ -158,6 +158,9 @@
                 View the uncompressed
                 <a href="https://github.com/Mowsh/Minecraft-Enchantment-Calculator">source code</a>
                 on github.
+                <br />
+                <br />
+                Bitcoin: 1C9yuUQLXxYchhyMHzFEGQf5mVbC4oMPbM
             </div>
             <div id="gplus">
                 <!-- Google Plus -->
