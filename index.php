@@ -3,7 +3,7 @@
     $patch_note_xml = simplexml_load_file("version_info.xml");
     $version_info = $patch_note_xml["vinfo"];
     $patch_notes = "";
-    
+
     foreach ($patch_note_xml->children() as $patch_note_line) {
         $patch_notes = $patch_notes . "<li>" . $patch_note_line . "</li>";
     }
@@ -187,8 +187,11 @@
             </div>
         <a href="https://twitter.com/ProtoMowsh" class="twitter-follow-button" data-show-count="false">Follow @ProtoMowsh</a>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+        <br />
+        <br />
+        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
         </div>
-        
+
 
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
@@ -198,7 +201,7 @@
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
-            
+
         </script>
         <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
