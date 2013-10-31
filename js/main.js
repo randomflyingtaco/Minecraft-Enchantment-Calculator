@@ -12,19 +12,25 @@ var enchantWanted;
 var recordedEnchant = new Object();
 var endPrecision = 0;
 
+// Avoid `console` errors in browsers that lack a console.
+if (!(window.console && console.log)) {
+    (function() {
+        var noop = function() {};
+        var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
+        var length = methods.length;
+        var console = window.console = {};
+        while (length--) {
+            console[methods[length]] = noop;
+        }
+    }());
+}
+
 // onPageLoad
 $(function() {
     // Google +1 init
     var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
     po.src = 'https://apis.google.com/js/plusone.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-
-    // Cufon init for font antialiasing
-    Cufon.now();
-    Cufon.replace($("#title"));
-    Cufon.replace($("#normal_calc"));
-    Cufon.replace($("#reverse_calc"));
-    Cufon.replace($("#result"));
 
     /*
 
@@ -171,7 +177,6 @@ $(function() {
             $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(1));
             calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
-            Cufon.refresh();  // Refresh text smoothing for new text
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
             $("#result").animate({
                 height: "300px"
@@ -214,7 +219,6 @@ $(function() {
             $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(2));
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
-            Cufon.refresh();  // Refresh text smoothing for new text
             $("#result").animate({
                 height: "300px"
             }, 500, function() {
