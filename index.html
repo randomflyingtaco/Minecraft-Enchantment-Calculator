@@ -1,24 +1,8 @@
-<?
-
-    $patch_note_xml = simplexml_load_file("version_info.xml");
-    $version_info = $patch_note_xml["vinfo"];
-    $patch_notes = "";
-
-    foreach ($patch_note_xml->children() as $patch_note_line) {
-        $patch_notes = $patch_notes . "<li>" . $patch_note_line . "</li>";
-    }
-
-?>
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]> ../80DC340E-E976-4C12-A039-0E456D6361BC/main.css        <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <title>Minecraft Enchantment Calculator</title>
-        <meta name="description" content="">
         <link rel="shortcut icon" href="favicon.ico">
         <meta name="viewport" content="width=800, initial-scale=1">
         <meta name="description" content="Minecraft Enchantment Calculator calculates the probabilities of getting particular enchants at certain levels for certain items.  It can also tell you the best level to get a certain enchant." />
@@ -27,26 +11,13 @@
         <link rel="stylesheet" href="css/normalize.css">
         <link rel="stylesheet" href="css/main.css">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic+Slab">
-        <script src="js/cufon-yui.js"></script>
-        <script src="js/antic_slab_400.font.js"></script>
         <link rel="shortcut icon" href="/favicon.ico" />
     </head>
     <body>
-        <!--[if lt IE 7]>
-            <p class="chromeframe">You are using an outdated browser. <a href="http://browsehappy.com/?locale=en">Upgrade your browser today</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to better experience this site.</p>
-        <![endif]-->
-
-        <div id="patchnotes">
-            <h1>Patch Notes</h1>
-            <ul>
-                <?=$patch_notes?>
-            </ul>
-            <div id="patchnotearrow"></div>
-        </div>
         <div id="title">
             <img src="img/logo.png" alt="" id="logo" />
             Minecraft Enchantment Calculator
-            <div id="version"><?=$version_info?></div>
+            <div id="version">TODO</div>
         </div>
         <div id="main_window">
             <div id="normal_calc">
@@ -158,9 +129,6 @@
                 View the uncompressed
                 <a href="https://github.com/Mowsh/Minecraft-Enchantment-Calculator">source code</a>
                 on github.
-                <br />
-                <br />
-                Bitcoin: 1C9yuUQLXxYchhyMHzFEGQf5mVbC4oMPbM
             </div>
             <div id="gplus">
                 <!-- Google Plus -->
@@ -191,8 +159,6 @@
         <br />
         <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
         </div>
-
-
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
         <script>
@@ -203,7 +169,6 @@
             s.parentNode.insertBefore(g,s)}(document,'script'));
 
         </script>
-        <script src="js/plugins.js"></script>
         <script src="js/main.js"></script>
     </body>
 </html>
