@@ -1,3 +1,6 @@
+// Revision info
+var revisionName = "rev4";
+
 // Form validation
 var currentEnchType;
 
@@ -60,6 +63,8 @@ $(function() {
         if (tool == "bow" && mat != "wood") {  // Check for bow
             if (mat == "leather" || mat == "chain") {
                 $("#tool").val("chestplate");
+            } else if (mat == "book") {
+                $("#tool").val("book");
             } else {
                 $("#tool").val("sword");
             }
@@ -110,6 +115,8 @@ $(function() {
         if (tool == "bow" && mat != "wood") {  // Check for bow
             if (mat == "leather" || mat == "chain") {
                 $("#revtool").val("chestplate");
+            } else if (mat == "book") {
+                $("#revtool").val("book");
             } else {
                 $("#revtool").val("sword");
             }
@@ -191,7 +198,7 @@ $(function() {
             height: "0px"
         }, 500, function() {
             $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
-            $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(1));
+            $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(1));
             calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
             $("#result").animate({
@@ -232,7 +239,7 @@ $(function() {
             height: "0px"
         }, 500, function() {
             $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
-            $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(2));
+            $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(2));
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
             $("#result").animate({
@@ -255,17 +262,6 @@ $(function() {
                 });
             });
         });
-    });
-
-    // Show patchnotes on mouse over
-    $("#version").mouseover(function() {
-        $("#patchnotes").css("visibility", "visible");
-        $("#patchnotes").css("top", $("#version").position().top - $("#patchnotes").height() - 23);
-        $("#patchnotes").css("left", $("#version").position().left - 85);
-    });
-
-    $("#version").mouseout(function() {
-        $("#patchnotes").css("visibility", "hidden");
     });
 
     // Update list of enchants
@@ -491,7 +487,7 @@ function addWeights (weight, newEnchant) {
 
 */
 function revCalc (enchantName, mat, tool) {
-    writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
+    writeLineToOutput ("Minecraft Enchanting Calculator for Minecraft version 1.4.3 to 1.6 - http://www.minecraftenchantmentcalculator.com/");
     writeLineToOutput ("");
     writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
     if (mat == "book") {
@@ -1015,7 +1011,7 @@ function calc(mat, tool, level) {
         var enchNameArray = new Array();
         var enchProbArray = new Array();
 
-        writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
+        writeLineToOutput ("Minecraft Enchanting Calculator for Minecraft 1.4.3 to 1.6 - http://www.minecraftenchantmentcalculator.com/");
         writeLineToOutput ("");
         writeLineToOutput ("Output log:  (This output was calculated 10,000 times, but results may still vary)");
         if (mat == "book") {

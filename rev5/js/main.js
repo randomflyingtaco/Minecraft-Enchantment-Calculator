@@ -1,3 +1,6 @@
+// Revision info
+var revisionName = "rev5";
+
 // Form validation
 var currentEnchType;
 
@@ -57,9 +60,11 @@ $(function() {
         var mat = $("#material").val();
         var tool = $("#tool").val();
 
-        if (tool == "bow" && mat != "wood") {  // Check for bow
+        if ((tool == "bow" || tool == "fishing rod") && mat != "wood") {  // Check for bow or fishing rod
             if (mat == "leather" || mat == "chain") {
                 $("#tool").val("chestplate");
+            } else if (mat == "book") {
+                $("#tool").val("book");
             } else {
                 $("#tool").val("sword");
             }
@@ -89,6 +94,8 @@ $(function() {
 
         if (tool == "bow" && mat != "wood") {  // Check for bow
             $("#material").val("wood");
+        } else if (tool == "fishing rod" && mat != "wood") { // Check for fishing rod
+            $("#material").val("wood");
         } else if (tool == "book" && mat != "book") {  // Check for book
             $("#material").val("book");
         } else if ((tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") && !(mat == "leather" || mat == "iron" || mat == "gold" || mat == "diamond" || mat == "chain")) {  // Check for armour
@@ -107,9 +114,11 @@ $(function() {
         var mat = $("#revmaterial").val();
         var tool = $("#revtool").val();
 
-        if (tool == "bow" && mat != "wood") {  // Check for bow
+        if ((tool == "bow" || tool == "fishing rod") && mat != "wood") {  // Check for bow
             if (mat == "leather" || mat == "chain") {
                 $("#revtool").val("chestplate");
+            } else if (mat == "book") {
+                $("#revtool").val("book");
             } else {
                 $("#revtool").val("sword");
             }
@@ -141,6 +150,8 @@ $(function() {
         var tool = $("#revtool").val();
 
         if (tool == "bow" && mat != "wood") {  // Check for bow
+            $("#revmaterial").val("wood");
+        } else if (tool == "fishing rod" && mat != "wood") { // Check for fishing rod
             $("#revmaterial").val("wood");
         } else if (tool == "book" && mat != "book") {  // Check for book
             $("#revmaterial").val("book");
@@ -191,7 +202,7 @@ $(function() {
             height: "0px"
         }, 500, function() {
             $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
-            $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(1));
+            $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(1));
             calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
             $("#result").animate({
@@ -232,7 +243,7 @@ $(function() {
             height: "0px"
         }, 500, function() {
             $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
-            $("#link").val("http://www.minecraftenchantmentcalculator.com/#" + getQuickCode(2));
+            $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(2));
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
             $("#result").animate({
@@ -255,17 +266,6 @@ $(function() {
                 });
             });
         });
-    });
-
-    // Show patchnotes on mouse over
-    $("#version").mouseover(function() {
-        $("#patchnotes").css("visibility", "visible");
-        $("#patchnotes").css("top", $("#version").position().top - $("#patchnotes").height() - 23);
-        $("#patchnotes").css("left", $("#version").position().left - 85);
-    });
-
-    $("#version").mouseout(function() {
-        $("#patchnotes").css("visibility", "hidden");
     });
 
     // Update list of enchants
@@ -349,6 +349,8 @@ function updateEnchType () {
           "Infinity": "infinity",
           "Knockback": "knockback",
           "Looting": "looting",
+          "Luck of the Sea": "luckofthesea",
+          "Lure": "lure",
           "Power": "power",
           "Projectile Protection": "projprot",
           "Protection": "protection",
@@ -366,13 +368,15 @@ function updateEnchType () {
           "Bane of Arthropods": "boa",
           "Fire Aspect": "fireaspect",
           "Looting": "looting",
-          "Knockback": "knockback"
+          "Knockback": "knockback",
+          "Unbreaking": "unbreaking"
         };
     } else if (newEnchType == "bow") {
         newOptions = {"Power": "power",
           "Punch": "punch",
           "Flame": "flame",
-          "Infinity": "infinity"
+          "Infinity": "infinity",
+          "Unbreaking": "unbreaking"
         };
     } else if (newEnchType == "tool") {
         newOptions = {"Unbreaking": "unbreaking",
@@ -385,20 +389,23 @@ function updateEnchType () {
           "Fire Protection": "fireprot",
           "Projectile Protection": "projprot",
           "Blast Protection": "blastprot",
-          "Thorns": "thorns"
+          "Thorns": "thorns",
+          "Unbreaking": "unbreaking"
         };
     } else if (newEnchType == "leggings") {
         newOptions = {"Protection": "protection",
           "Fire Protection": "fireprot",
           "Projectile Protection": "projprot",
-          "Blast Protection": "blastprot"
+          "Blast Protection": "blastprot",
+          "Unbreaking": "unbreaking"
         };
     } else if (newEnchType == "boots") {
         newOptions = {"Protection": "protection",
           "Fire Protection": "fireprot",
           "Projectile Protection": "projprot",
           "Blast Protection": "blastprot",
-          "Feather Falling": "featherfalling"
+          "Feather Falling": "featherfalling",
+          "Unbreaking": "unbreaking"
         };
     } else if (newEnchType == "helmet") {
         newOptions = {"Protection": "protection",
@@ -406,7 +413,13 @@ function updateEnchType () {
           "Projectile Protection": "projprot",
           "Blast Protection": "blastprot",
           "Aqua Affinity": "aquaaffinity",
-          "Respiration": "respiration"
+          "Respiration": "respiration",
+          "Unbreaking": "unbreaking"
+        };
+    } else if (newEnchType == "fishing rod") {
+        newOptions = {"Luck of the Sea": "luckofthesea",
+          "Lure": "lure",
+          "Unbreaking": "unbreaking"
         };
     }
 
@@ -443,7 +456,7 @@ function changeEnchLevels() {
           "II": "2",
           "I": "1"
         };
-    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns") {
+    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns" || enchName == "luckofthesea" || enchName == "lure") {
         newLvOptions = {"III": "3",
           "II": "2",
           "I": "1"
@@ -491,7 +504,7 @@ function addWeights (weight, newEnchant) {
 
 */
 function revCalc (enchantName, mat, tool) {
-    writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
+    writeLineToOutput ("Minecraft Enchanting Calculator for Minecraft version 1.7 and later - http://www.minecraftenchantmentcalculator.com/");
     writeLineToOutput ("");
     writeLineToOutput ("Output log:  (Each level is calculated 10,000 times, but results may still vary)");
     if (mat == "book") {
@@ -521,6 +534,13 @@ function revCalc (enchantName, mat, tool) {
         writeLineToOutput ("");
     }
 
+    // Notice about Lure and Luck of the Sea
+
+    if (enchantName == "Lure" || enchantName == "Luck of the Sea") {
+        writeLineToOutput ("");
+        writeLineToOutput ("Lure and Luck of the Sea are new, therefore this output may be incorrect.");
+        writeLineToOutput ("");
+    }
 
     // Run calculation once for each level
     enchantWanted = enchantName;
@@ -554,7 +574,7 @@ function calc(mat, tool, level) {
     endPrecision = 0;
 
     // Set enchantability value of each tool
-    if (tool == "bow" || tool == "book") {
+    if (tool == "bow" || tool == "book" || tool == "fishing rod") {
         enchantability = 1;
     } else if (tool == "axe" || tool == "pickaxe" || tool == "shovel" || tool == "sword") {
         if (mat == "wood") {
@@ -592,7 +612,26 @@ function calc(mat, tool, level) {
 
         // Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
 
-        if (tool == "bow") {
+        if (tool == "fishing rod") {
+            if (modifiedLevel >= 33 && modifiedLevel <= 70) {
+                addWeights(1, "Lure III");
+                addWeights(1, "Luck of the Sea III");
+            } else if (modifiedLevel >= 24 && modifiedLevel <= 60) {
+                addWeights(1, "Lure II");
+                addWeights(1, "Luck of the Sea II");
+            } else if (modifiedLevel >= 15 && modifiedLevel <= 50) {
+                addWeights(1, "Lure I");
+                addWeights(1, "Luck of the Sea I");
+            }
+
+            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+                addWeights(5, "Unbreaking III");
+            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+                addWeights(5, "Unbreaking II");
+            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+                addWeights(5, "Unbreaking I");
+            }
+        } else if (tool == "bow") {
             if (modifiedLevel >= 41 && modifiedLevel <= 56) {
                 addWeights(10, "Power V");
             } else if (modifiedLevel >= 31 && modifiedLevel <= 46) {
@@ -614,6 +653,14 @@ function calc(mat, tool, level) {
             if (modifiedLevel >= 20 && modifiedLevel <= 50) {
                 addWeights(1, "Infinity I");
                 addWeights(2, "Flame I");
+            }
+
+            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+                addWeights(5, "Unbreaking III");
+            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+                addWeights(5, "Unbreaking II");
+            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+                addWeights(5, "Unbreaking I");
             }
         } else if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
             if (modifiedLevel >= 41 && modifiedLevel <= 91) {
@@ -696,6 +743,14 @@ function calc(mat, tool, level) {
             } else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(2, "Looting I");
             }
+            
+            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+                addWeights(5, "Unbreaking III");
+            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+                addWeights(5, "Unbreaking II");
+            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+                addWeights(5, "Unbreaking I");
+            }
         } else if (tool == "boots" || tool == "leggings" || tool == "chestplate" || tool == "helmet") {
             if (modifiedLevel >= 34 && modifiedLevel <= 54) {
                 addWeights(10, "Protection IV");
@@ -735,6 +790,14 @@ function calc(mat, tool, level) {
                 addWeights(5, "Projectile Protection II");
             } else if (modifiedLevel >= 3 && modifiedLevel <= 18) {
                 addWeights(5, "Projectile Protection I");
+            }
+            
+            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+                addWeights(5, "Unbreaking III");
+            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+                addWeights(5, "Unbreaking II");
+            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+                addWeights(5, "Unbreaking I");
             }
 
             // Extra enchants for boots and helmets
@@ -948,6 +1011,25 @@ function calc(mat, tool, level) {
                 addWeights(1, "Infinity I");
                 addWeights(2, "Flame I");
             }
+            
+            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
+                addWeights(5, "Unbreaking III");
+            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
+                addWeights(5, "Unbreaking II");
+            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
+                addWeights(5, "Unbreaking I");
+            }
+
+            if (modifiedLevel >= 33 && modifiedLevel <= 70) {
+                addWeights(1, "Lure III");
+                addWeights(1, "Luck of the Sea III");
+            } else if (modifiedLevel >= 24 && modifiedLevel <= 60) {
+                addWeights(1, "Lure II");
+                addWeights(1, "Luck of the Sea II");
+            } else if (modifiedLevel >= 15 && modifiedLevel <= 50) {
+                addWeights(1, "Lure I");
+                addWeights(1, "Luck of the Sea I");
+            }
         }
 
         var toolEnchantLineNumber = 0;
@@ -970,7 +1052,7 @@ function calc(mat, tool, level) {
 
             // Possibly adds another line of enchants
             modifiedLevel = Math.floor(modifiedLevel / 2);
-            if (Math.random() <= (modifiedLevel + 1) / 50 && toolEnchantLineNumber < 4 && tool != "book") {
+            if (Math.random() <= (modifiedLevel + 1) / 50 && toolEnchantLineNumber < 4) {
                 // Remove any conflicting enchants from the possibleEnchants
 
                 for (var possibleEnchantIndex = possibleEnchants.length - 1; possibleEnchantIndex >= 0; possibleEnchantIndex--) {
@@ -1015,13 +1097,17 @@ function calc(mat, tool, level) {
         var enchNameArray = new Array();
         var enchProbArray = new Array();
 
-        writeLineToOutput ("Minecraft Enchanting Calculator 2.2 - http://www.minecraftenchantmentcalculator.com/");
+        writeLineToOutput ("Minecraft Enchanting Calculator for Minecraft version 1.7 and later - http://www.minecraftenchantmentcalculator.com/");
         writeLineToOutput ("");
         writeLineToOutput ("Output log:  (This output was calculated 10,000 times, but results may still vary)");
         if (mat == "book") {
             writeLineToOutput ("Possible enchants for book at level " + level + "...");
         } else {
             writeLineToOutput ("Possible enchants for " + mat + " " + tool + " at level " + level + "...");
+        }
+
+        if (tool == "fishing rod") {
+            writeLineToOutput ("Lure and Luck of the Sea are new, therefore this output may be incorrect.");
         }
 
         // Creates an array for names and probabilieies, changes probabilities to percentages
@@ -1061,16 +1147,14 @@ function calc(mat, tool, level) {
         }
 
         // Write extra info such as chances of getting an extra enchant, and special item information
-        if (tool != "book") {
-            var avglevel = level
-            writeLineToOutput ("");
-            avglevel = avglevel / 2;
-            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 2nd enchant.");
-            avglevel = avglevel / 2;
-            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 3rd enchant.");
-            avglevel = avglevel / 2;
-            writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 4th enchant.");
-        }
+        var avglevel = level
+        writeLineToOutput ("");
+        avglevel = avglevel / 2;
+        writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 2nd enchant.");
+        avglevel = avglevel / 2;
+        writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 3rd enchant.");
+        avglevel = avglevel / 2;
+        writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 4th enchant.");
 
         if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
             writeLineToOutput ("");
