@@ -34,6 +34,22 @@ $(function() {
 
     /*
 
+        Funciton called when the user changes the version
+
+    */
+
+    $("#version").change(function(){
+        var version = $("#version").val();
+
+        if (version == "rev4") {
+            window.open("../rev4/index.html", "_self");
+        } else if (version == "rev5") {
+            window.open("../rev5/index.html", "_self");
+        }
+    });
+
+    /*
+
         Function called when the main calculator's material is changed, keeps tools and materials valid
 
     */
