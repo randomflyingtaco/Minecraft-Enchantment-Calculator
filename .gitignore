@@ -13,3 +13,7 @@
 
 # Netbeans
 /nbproject
+
+# MECiOS
+/ios
+
