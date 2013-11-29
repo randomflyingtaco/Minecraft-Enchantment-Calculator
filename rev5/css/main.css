@@ -327,6 +327,53 @@ input {
 	left: 225px;
 }
 
+#ios_ad {
+    width: 700px;
+    height: 100px;
+    border-radius: 15px;
+    background-color: rgba(255, 255, 255, 0.5);
+    margin: 40px auto 0px auto;
+    font-family: 'Antic Slab', serif;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+#ios_ad img {
+    display: block;
+    float: left;
+    width: 76px;
+    height: 76px;
+    margin: 12px 0px 12px -10px;
+}
+
+#ios_ad #ad_buttons {
+    float: right;
+    height: 100%;
+}
+
+#ios_ad a {
+    display: block;
+    width: 150px;
+    height: 25px;
+    border: 1px solid;
+    border-radius: 4px;
+    font-size: 14px;
+    text-decoration: none;
+    text-align: center;
+    line-height: 25px;
+    margin: 15px;
+    color: #fff;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.2);
+
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05);
+    background-image: linear-gradient(to bottom, #62c462, #51a351);
+}
+
+#ios_ad p {
+    padding: 20px 80px;
+}
+
 
 /* ==========================================================================
    Helper classes

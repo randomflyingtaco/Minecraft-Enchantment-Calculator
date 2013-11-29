@@ -13,8 +13,32 @@
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic+Slab">
         <link rel="shortcut icon" type="image/png" href="/favicon.png" />
         <link rel="icon" type="image/png" href="/favicon.png" />
+        <meta name="apple-itunes-app" content="app-id=763850739">
+        <script type="text/javascript">
+            window.onload = function () {
+                var uagent = navigator.userAgent.toLowerCase();
+
+                if (uagent.search("iphone") > -1 ||
+                    uagent.search("ipod") > -1 ||
+                    uagent.search("ipad") > -1 ||
+                    uagent.search("appletv") > -1) {
+                    document.getElementById("ios_ad").style.visibility='hidden';
+                    document.getElementById("ios_ad").style.height='0px';
+                }
+            }
+        </script>
     </head>
     <body>
+        <div id="ios_ad">
+            <img src="../ios/img/icon.png" alt="" />
+            <div id="ad_buttons">
+                <a href="../ios/">More Info</a>
+                <a href="https://itunes.apple.com/us/app/enchantment-calculator-for/id763850739?ls=1&mt=8">View on App Store</a>
+            </div>
+            <p>
+                Minecraft Enchantment Calculator is now<br />available for iPhone and iPad!
+            </p>
+        </div>
         <div id="title">
             <img src="img/logo.png" height="100" width="100" alt="" id="logo" />
             Minecraft Enchantment Calculator
