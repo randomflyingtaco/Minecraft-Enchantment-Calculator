@@ -1162,9 +1162,6 @@ function calc(mat, tool, level) {
         } else if (tool == "sword") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
-        } else if (tool == "book") {
-            writeLineToOutput ("");
-            writeLineToOutput ("Books can only get one enchant.");
         } else if (tool != "bow") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
