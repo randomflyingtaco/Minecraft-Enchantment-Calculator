@@ -231,7 +231,7 @@ $(function() {
             // Clear results
             $("#result").html("");
             // Top info
-            $("#result").html($("#result").html() + "<div class=\"info\">Calculated for Minecraft 1.4.3 to 1.6<br />Enchantment simulated 10,000 times per level, but results may still vary.</div>");
+            $("#result").html($("#result").html() + "<div class=\"info\">Calculated for Minecraft 1.7<br />Enchantment simulated 10,000 times per level, but results may still vary.</div>");
             // Result table
             $("#result").html($("#result").html() + "Result:<br /><table id=\"resultTable\"><tr><td>Enchant</td><td>Probability</td></tr></table>");
             // Info
