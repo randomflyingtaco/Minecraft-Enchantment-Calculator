@@ -10,10 +10,7 @@ I no longer accept donations for this project, however there is an official iOS 
 
 ## Todo
 
-- Clean up code!
-- Share assets between rev4 and rev5
 - Minecraft 1.8 support
-- Fix fishing rods
 - Fix percentages being wrong for calculations with only one outputted enchant
 - Pretty up the output table like in the iOS app
 - Create a graph using HTML5 canvas like in the iOS app
