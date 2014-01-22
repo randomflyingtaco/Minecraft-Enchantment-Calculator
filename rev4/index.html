@@ -2,7 +2,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="viewport" content="width=800, initial-scale=1">
+        <meta name="viewport" content="width=1000, initial-scale=1">
 
         <!-- Search engine metadata -->
         <title>Minecraft Enchantment Calculator</title>
@@ -29,8 +29,8 @@
                     uagent.search("ipod") > -1 ||
                     uagent.search("ipad") > -1 ||
                     uagent.search("appletv") > -1) {
-                    document.getElementById("ios_ad").style.visibility='hidden';
-                    document.getElementById("ios_ad").style.height='0px';
+                    var ios_node = document.getElementById("ios_ad")
+                    ios_node.parentNode.removeChild(ios_node);
                 }
             }
         </script>

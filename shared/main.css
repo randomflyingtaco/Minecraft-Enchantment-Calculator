@@ -187,6 +187,7 @@ input {
 	font-family: 'Antic Slab', serif;
 	text-align: center;
 	background-color: #ffffff;
+    padding: 0px;
 }
 
 #link {
