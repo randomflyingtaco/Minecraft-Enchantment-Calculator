@@ -14,6 +14,7 @@ var isRecordingEnchants = false;
 var enchantWanted;
 var recordedEnchant = new Object();
 var endPrecision = 0;
+var numResultRows = 0;
 
 // onPageLoad
 $(function() {
@@ -166,12 +167,28 @@ $(function() {
         $("#or").animate({
             height: "0px"
         }, 500, function() {
-            $("#result").html("Output Log:<br /><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
+            // Clear results
+            $("#result").html("");
+            // Top info
+            $("#result").html($("#result").html() + "<div class=\"info\">Calculated for Minecraft 1.4.3 to 1.6<br />Enchantment simulated 10,000 times, but results may still vary.</div>");
+            // Result table
+            $("#result").html($("#result").html() + "Result:<br /><table id=\"resultTable\"><tr><td>Enchant</td><td>Probability</td></tr></table>");
+            // Extra enchants table
+            $("#result").html($("#result").html() + "Extra Enchants:<br /><table id=\"extraEnchantTable\"><tr><td>x2</td><td>x3</td><td>x4</td></tr><tr><td id=\"extrax2\"></td><td id=\"extrax3\"></td><td id=\"extrax4\"></td></tr></table>");
+            // Info
+            $("#result").html($("#result").html() + "<div class=\"info\" id=\"extraInfo\"></div>");
+            // Output log
+            $("#result").html($("#result").html() + "Output Log:<br /><textarea id=\"outputArea\"></textarea><br />");
+            // Share link
+            $("#result").html($("#result").html() + "<div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div>");
+            // Back button
+            $("#result").html($("#result").html() + "<input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(1));
             calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
+            var newHeight = 560 + (numResultRows + 1) * 35;
             $("#result").animate({
-                height: "300px"
+                height: "" + newHeight + "px"
             }, 500, function() {
                 $("#calcback").click(function(){  // Close the result when the user clicks back
                     $("#main_window").css("border-bottom", "none");
@@ -207,12 +224,26 @@ $(function() {
         $("#or").animate({
             height: "0px"
         }, 500, function() {
-            $("#result").html("Output Log:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
+            // Clear results
+            $("#result").html("");
+            // Top info
+            $("#result").html($("#result").html() + "<div class=\"info\">Calculated for Minecraft 1.4.3 to 1.6<br />Enchantment simulated 10,000 times per level, but results may still vary.</div>");
+            // Result table
+            $("#result").html($("#result").html() + "Result:<br /><table id=\"resultTable\"><tr><td>Enchant</td><td>Probability</td></tr></table>");
+            // Info
+            $("#result").html($("#result").html() + "<div class=\"info\" id=\"extraInfo\"></div>");
+            // Output log
+            $("#result").html($("#result").html() + "Output Log:<br /><textarea id=\"outputArea\"></textarea><br />");
+            // Share link
+            $("#result").html($("#result").html() + "<div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div>");
+            // Back button
+            $("#result").html($("#result").html() + "<input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(2));
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
+            var newHeight = 400 + (numResultRows + 1) * 35;
             $("#result").animate({
-                height: "300px"
+                height: "" + newHeight + "px"
             }, 500, function() {
                 $("#calcback").click(function(){  // Close the result when the user clicks back
                     $("#main_window").css("border-bottom", "none");
@@ -468,21 +499,21 @@ function revCalc (enchantName, mat, tool) {
     // Show errors for impossible enchants
     if (enchantName == "Power V") {
         writeLineToOutput ("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
+        $("#extraInfo").text("Error: Power V is only obtainable by repairing two Power IV bows in an anvil.");
         return;
     }
 
     if (enchantName == "Sharpness V" && mat != "gold") {
         writeLineToOutput ("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
+        $("#extraInfo").text("Error: Sharpness V is only obtainable on a gold sword, or by repairing two Sharpness IV swords in an anvil.");
         return;
     }
 
     // Notice about Thorns III being pretty much impossible
-
     if (enchantName == "Thorns III") {
         writeLineToOutput ("");
-        writeLineToOutput ("IMPORTANT NOTICE ABOUT THORNS III:");
-        writeLineToOutput ("Thorns III is almost impossible to create, and can only be obtained on a gold chestplate at less than a 0.1% chance at level 30.");
-        writeLineToOutput ("Use Thorns II for now.");
+        writeLineToOutput ("Thorns III is almost impossible to get through enchanting.");
+        $("#extraInfo").text("Thorns III is almost impossible to get through enchanting.");
         writeLineToOutput ("");
     }
 
@@ -495,18 +526,32 @@ function revCalc (enchantName, mat, tool) {
     }
 
     // Write each level to the output
+    numResultRows = 0
     for (var index in recordedEnchant) {
         if(isNaN(recordedEnchant[index])) {
             continue;
         }
-        if(recordedEnchant[index] == 0) {
+        if(recordedEnchant[index] < 1) {
             writeLineToOutput (index + ": <0.1%");
+            addRow("" + index, "<0.1%");
+            numResultRows++;
             continue;
         }
         recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;  // Round percentages to two decimal places
         writeLineToOutput (index + ": " + recordedEnchant[index] + "%");
+        addRow("" + index, "" + recordedEnchant[index] + "%");
+        numResultRows++;
     }
     isRecordingEnchants = false;
+}
+
+/*
+
+    Return a row of the result table
+
+*/
+function addRow(name, value) {
+    $("#resultTable tr:last").after("<tr><td>" + name + "</td><td>" + value + "</td></tr>");
 }
 
 /*
@@ -1020,10 +1065,14 @@ function calc(mat, tool, level) {
             enchProbArray[outputIndex] = Math.floor(enchProbArray[outputIndex] * 10) / 10;  // Round probabilities to 2 decimal places
             if (enchProbArray[outputIndex] < 0.1) {
                 writeLineToOutput (enchNameArray[outputIndex] + ": <0.1%");
+                addRow(enchNameArray[outputIndex], "<0.1%");
             } else {
                 writeLineToOutput (enchNameArray[outputIndex] + ": " + enchProbArray[outputIndex] + "%");
+                addRow(enchNameArray[outputIndex], enchProbArray[outputIndex] + "%");
             }
         }
+
+        numResultRows = enchNameArray.length;
 
         // Write extra info such as chances of getting an extra enchant, and special item information
         if (tool != "book") {
@@ -1031,24 +1080,31 @@ function calc(mat, tool, level) {
             writeLineToOutput ("");
             avglevel = avglevel / 2;
             writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 2nd enchant.");
+            $("#extrax2").text("" + (avglevel + 1)/50*100 + "%");
             avglevel = avglevel / 2;
             writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 3rd enchant.");
+            $("#extrax3").text("" + (avglevel + 1)/50*100 + "%");
             avglevel = avglevel / 2;
             writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 4th enchant.");
+            $("#extrax4").text("" + (avglevel + 1)/50*100 + "%");
         }
 
         if (tool == "axe" || tool == "pickaxe" || tool == "shovel") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Silk Touch and Fortune on the same tool.");
+            $("#extraInfo").text("You cannot get Silk Touch and Fortune on the same tool.");
         } else if (tool == "sword") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
+            $("#extraInfo").text("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
         } else if (tool == "book") {
             writeLineToOutput ("");
             writeLineToOutput ("Books can only get one enchant.");
+            $("#extraInfo").text("Books can only get one enchant.");
         } else if (tool != "bow") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
+            $("#extraInfo").text("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
         }
     } else {
         recordedEnchant[level] = enchantsReceived[enchantWanted] / endPrecision * 100;
