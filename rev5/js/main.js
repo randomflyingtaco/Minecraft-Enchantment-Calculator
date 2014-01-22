@@ -15,42 +15,8 @@ var enchantWanted;
 var recordedEnchant = new Object();
 var endPrecision = 0;
 
-// Avoid `console` errors in browsers that lack a console.
-if (!(window.console && console.log)) {
-    (function() {
-        var noop = function() {};
-        var methods = ['assert', 'clear', 'count', 'debug', 'dir', 'dirxml', 'error', 'exception', 'group', 'groupCollapsed', 'groupEnd', 'info', 'log', 'markTimeline', 'profile', 'profileEnd', 'markTimeline', 'table', 'time', 'timeEnd', 'timeStamp', 'trace', 'warn'];
-        var length = methods.length;
-        var console = window.console = {};
-        while (length--) {
-            console[methods[length]] = noop;
-        }
-    }());
-}
-
 // onPageLoad
 $(function() {
-    // Google +1 init
-    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-    po.src = 'https://apis.google.com/js/plusone.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-
-    /*
-
-        Funciton called when the user changes the version
-
-    */
-
-    $("#version").change(function(){
-        var version = $("#version").val();
-
-        if (version == "rev4") {
-            window.open("../rev4/index.html", "_self");
-        } else if (version == "rev5") {
-            window.open("../rev5/index.html", "_self");
-        }
-    });
-
     /*
 
         Function called when the main calculator's material is changed, keeps tools and materials valid
@@ -192,7 +158,10 @@ $(function() {
 
     */
     $("#calc").click(function(){
+        // Log the calculation on google analytics
         _gaq.push(['_trackEvent', 'Calculate', 'Calculate Level ' + $("#level").val() + ' on a ' + $("#material").val() + ' ' + $("#tool").val()]);
+
+        // Open the results div
         $("#main_window").css("border-bottom", "solid 1px #aaaaaa");
         $("#result").css("border-top", "solid 1px #eeeeee");
         $("#reverse_calc").animate({
@@ -201,7 +170,7 @@ $(function() {
         $("#or").animate({
             height: "0px"
         }, 500, function() {
-            $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
+            $("#result").html("Output Log:<br /><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(1));
             calc($("#material").val(), $("#tool").val(), $("#level").val());  // Calculate enchants, write output to output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire quick link when the user clicks the link text box
@@ -242,7 +211,7 @@ $(function() {
         $("#or").animate({
             height: "0px"
         }, 500, function() {
-            $("#result").html("Result:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
+            $("#result").html("Output Log:<br/ ><textarea id=\"outputArea\"></textarea><br /><div id=\"linkdiv\">Link: <input type=\"text\" id=\"link\" /></div><input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(2));
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
