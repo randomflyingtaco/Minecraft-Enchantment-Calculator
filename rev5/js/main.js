@@ -1178,7 +1178,11 @@ function calc(mat, tool, level) {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
             $("#extraInfo").text("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
-        } else if (tool != "bow" && tool != "fishing rod") {
+        } else if (tool == "fishing rod") {
+            writeLineToOutput ("");
+            writeLineToOutput ("Fishing rods have a chance to get no enchants.");
+            $("#extraInfo").text("Fishing rods have a chance to get no enchants.");
+        } else if (tool != "bow") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
             $("#extraInfo").text("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");

@@ -11,5 +11,4 @@ I no longer accept donations for this project, however there is an official iOS 
 ## Todo
 
 - Minecraft 1.8 support
-- Fix percentages being wrong for calculations with only one outputted enchant
 - Create a graph using HTML5 canvas like in the iOS app
