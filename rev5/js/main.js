@@ -1020,13 +1020,13 @@ function calc(mat, tool, level) {
                 addWeights(5, "Unbreaking I");
             }
 
-            if (modifiedLevel >= 33 && modifiedLevel <= 70) {
+            if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(1, "Lure III");
                 addWeights(1, "Luck of the Sea III");
-            } else if (modifiedLevel >= 24 && modifiedLevel <= 60) {
+            } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
                 addWeights(1, "Lure II");
                 addWeights(1, "Luck of the Sea II");
-            } else if (modifiedLevel >= 15 && modifiedLevel <= 50) {
+            } else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(1, "Lure I");
                 addWeights(1, "Luck of the Sea I");
             }
@@ -1162,7 +1162,7 @@ function calc(mat, tool, level) {
         } else if (tool == "sword") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Bane of Arthropods, Smite and Sharpness on the same sword.");
-        } else if (tool != "bow") {
+        } else if (tool != "bow" && tool != "fishing rod") {
             writeLineToOutput ("");
             writeLineToOutput ("You cannot get Fire, Blast, Projectile or regular Protection on the same piece of armour.");
         }
