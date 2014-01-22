@@ -2,17 +2,26 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <title>Minecraft Enchantment Calculator</title>
         <meta name="viewport" content="width=800, initial-scale=1">
+
+        <!-- Search engine metadata -->
+        <title>Minecraft Enchantment Calculator</title>
         <meta name="description" content="Minecraft Enchantment Calculator calculates the probabilities of getting particular enchants at certain levels for certain items.  It can also tell you the best level to get a certain enchant." />
         <meta name="author" content="Minecraft Enchantment Calculator" />
+
+        <!-- CSS and custom font -->
         <link rel="stylesheet" href="../shared/normalize.css">
         <link rel="stylesheet" href="../shared/main.css">
         <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic+Slab">
+
+        <!-- Setting up favicon stuff -->
         <link rel="shortcut icon" type="image/png" href="../favicon.png" />
         <link rel="icon" type="image/png" href="../favicon.png" />
+
+        <!-- iOS banner -->
         <meta name="apple-itunes-app" content="app-id=763850739">
         <script type="text/javascript">
+            // Only show the iOS ad if the user isn't on iOS (iOS users have an appbanner instead)
             window.onload = function () {
                 var uagent = navigator.userAgent.toLowerCase();
 
@@ -27,6 +36,7 @@
         </script>
     </head>
     <body>
+        <!-- iOS Banner for non-iOS user agents -->
         <div id="ios_ad">
             <img src="../ios/img/icon.png" alt="" />
             <div id="ios_ad_buttons">
@@ -37,6 +47,8 @@
                 Minecraft Enchantment Calculator is now<br />available for iPhone and iPad!
             </p>
         </div>
+
+        <!-- Title and version selector -->
         <div id="title">
             <img src="../shared/logo.png" height="100" width="100" alt="" id="logo" />
             Minecraft Enchantment Calculator
@@ -45,6 +57,8 @@
                 <option value="rev5">Minecraft 1.7</option>
             </select>
         </div>
+
+        <!-- Calculator form area -->
         <div id="main_window">
             <div id="normal_calc">
                 What enchants can I get on a
@@ -140,9 +154,14 @@
                 <input type="button" id="revcalc" value="Calculate..." />
             </div>
         </div>
+
+        <!-- Results area (populated by Javascript later) -->
         <div id="result">
         </div>
+        
+        <!-- Footer with share links, info and copyright -->
         <div id="otherstuff">
+            <!-- Footer info -->
             <div id="contact">
                 All results are calculated using the algorithm described
                 <a href="http://www.minecraftwiki.net/wiki/Enchantment_Mechanics">here</a>.
@@ -156,6 +175,8 @@
                 <a href="https://github.com/Mowsh/Minecraft-Enchantment-Calculator">source code</a>
                 on github.
             </div>
+
+            <!-- Share links -->
             <div id="gplus">
                 <!-- Google Plus -->
                 <g:plusone size="medium"></g:plusone>
@@ -166,34 +187,41 @@
                 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
             </div>
             <div id="facebook">
-            <!-- Facebook -->
-            <div id="fb-root"></div>
-            <script>
-                (function(d, s, id) {
-                    var js, fjs = d.getElementsByTagName(s)[0];
-                    if (d.getElementById(id)) return;
-                    js = d.createElement(s); js.id = id;
-                    js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=239673636079825";
-                    fjs.parentNode.insertBefore(js, fjs);
-                }(document, 'script', 'facebook-jssdk'));
-            </script>
-            <div class="fb-like" data-href="http://www.minecraftenchantmentcalculator.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
+                <!-- Facebook -->
+                <div id="fb-root"></div>
+                <script>
+                    (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=239673636079825";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+                </script>
+                <div class="fb-like" data-href="http://www.minecraftenchantmentcalculator.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
             </div>
-        <a href="https://twitter.com/ProtoMowsh" class="twitter-follow-button" data-show-count="false">Follow @ProtoMowsh</a>
-        <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
-        <br />
-        <br />
-        <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+            <!-- Twitter follow button -->
+            <a href="https://twitter.com/ProtoMowsh" class="twitter-follow-button" data-show-count="false">Follow @ProtoMowsh</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            <br />
+            <br />
+            <!-- CC by-nc-sa license -->
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
         </div>
+
+        <!-- Get Google's shared version of jQuery -->
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <!-- If Google is somehow down, download our local one instead -->
         <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+        <!-- Google analytics tracking code (UA-27652939-1) -->
         <script>
-            // Google Analytics init
             var _gaq=[['_setAccount','UA-27652939-1'],['_trackPageview']];
             (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
             g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
             s.parentNode.insertBefore(g,s)}(document,'script'));
         </script>
+
+        <!-- Load calculator JS -->
         <script src="js/main.js"></script>
     </body>
 </html>
