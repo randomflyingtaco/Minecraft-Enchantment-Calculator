@@ -250,7 +250,7 @@ input {
 	overflow: hidden;
 }
 
-#enchant {
+#enchant, #guaranteed_enchant {
 	width: 270px;
 	background-position: 255px 13px;
 }
@@ -265,7 +265,6 @@ input {
 	width: 800px;
 	height: 20px;
 	text-align: center;
-	/*text-shadow: 0px 1px 0px rgba(255,255,255,0.4);*/
 	color: #dddddd;
 	box-shadow: 0px 0px 0px black
 }

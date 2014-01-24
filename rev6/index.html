@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport" content="width=1000, initial-scale=1">
+
+        <!-- Search engine metadata -->
+        <title>Minecraft Enchantment Calculator</title>
+        <meta name="description" content="Minecraft Enchantment Calculator calculates the probabilities of getting particular enchants at certain levels for certain items.  It can also tell you the best level to get a certain enchant." />
+        <meta name="author" content="Minecraft Enchantment Calculator" />
+
+        <!-- CSS and custom font -->
+        <link rel="stylesheet" href="../shared/normalize.css">
+        <link rel="stylesheet" href="../shared/main.css">
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Antic+Slab">
+
+        <!-- Setting up favicon stuff -->
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+        <link rel="icon" type="image/png" href="../favicon.png" />
+
+        <!-- iOS banner -->
+        <meta name="apple-itunes-app" content="app-id=763850739">
+        <script type="text/javascript">
+            // Only show the iOS ad if the user isn't on iOS (iOS users have an appbanner instead)
+            window.onload = function () {
+                var uagent = navigator.userAgent.toLowerCase();
+
+                if (uagent.search("iphone") > -1 ||
+                    uagent.search("ipod") > -1 ||
+                    uagent.search("ipad") > -1 ||
+                    uagent.search("appletv") > -1) {
+                    var ios_node = document.getElementById("ios_ad")
+                    ios_node.parentNode.removeChild(ios_node);
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <!-- iOS Banner for non-iOS user agents -->
+        <div id="ios_ad">
+            <img src="../ios/img/icon.png" alt="" />
+            <div id="ios_ad_buttons">
+                <a href="../ios/">More Info</a>
+                <a href="https://itunes.apple.com/us/app/enchantment-calculator-for/id763850739?ls=1&mt=8">View on App Store</a>
+            </div>
+            <p>
+                Minecraft Enchantment Calculator is now<br />available for iPhone and iPad!
+            </p>
+        </div>
+
+        <!-- Title and version selector -->
+        <div id="title">
+            <img src="../shared/logo.png" height="100" width="100" alt="" id="logo" />
+            Minecraft Enchantment Calculator
+            <select id="version">
+                <option value="rev4">Minecraft 1.4.3 to 1.6</option>
+                <option value="rev5">Minecraft 1.7</option>
+                <option value="rev6" selected="yes">1.8 Snapshots (Beta)</option>
+            </select>
+        </div>
+
+        <!-- Calculator form area -->
+        <div id="main_window">
+            <div id="normal_calc">
+                What enchants can I get on a
+                <select id="material">
+                    <option value="chain">Chain</option>
+                    <option value="diamond" selected="yes">Diamond</option>
+                    <option value="gold">Gold</option>
+                    <option value="iron">Iron</option>
+                    <option value="leather">Leather</option>
+                    <option value="stone">Stone</option>
+                    <option value="wood">Wood</option>
+                    <option value="book">Book</option>
+                </select>
+                <select id="tool">
+                    <option value="axe">Axe</option>
+                    <option value="boots">Boots</option>
+                    <option value="bow">Bow</option>
+                    <option value="chestplate">Chest Plate</option>
+                    <option value="fishing rod">Fishing Rod</option>
+                    <option value="helmet">Helmet</option>
+                    <option value="leggings">Leggings</option>
+                    <option value="pickaxe" selected="yes">Pickaxe</option>
+                    <option value="shovel">Shovel</option>
+                    <option value="sword">Sword</option>
+                    <option value="book">(Book)</option>
+                </select>
+                <br />
+                at level
+                <input type="text" id="level" maxlength="2" value="30" />
+                with
+                <select id="guaranteed_enchant">
+                    <option value="" selected="yes">(Unknown)</option>
+                    <option value="aquaaffinity">Aqua Affinity</option>
+                    <option value="boa">Bane of Arthropods</option>
+                    <option value="blastprot">Blast Protection</option>
+                    <option value="efficiency">Efficiency</option>
+                    <option value="featherfalling">Feather Falling</option>
+                    <option value="fireaspect">Fire Aspect</option>
+                    <option value="fireprot">Fire Protection</option>
+                    <option value="flame">Flame</option>
+                    <option value="fortune">Fortune</option>
+                    <option value="infinity">Infinity</option>
+                    <option value="knockback">Knockback</option>
+                    <option value="looting">Looting</option>
+                    <option value="luckofthesea">Luck of the Sea</option>
+                    <option value="lure">Lure</option>
+                    <option value="power">Power</option>
+                    <option value="projprot">Projectile Protection</option>
+                    <option value="protection">Protection</option>
+                    <option value="punch">Punch</option>
+                    <option value="respiration">Respiration</option>
+                    <option value="sharpness">Sharpness</option>
+                    <option value="silktouch">Silk Touch</option>
+                    <option value="smite">Smite</option>
+                    <option value="thorns">Thorns</option>
+                    <option value="unbreaking">Unbreaking</option>
+                </select>
+                ?
+                <input type="button" id="calc" value="Calculate..." />
+            </div>
+            <div id="or">
+                - Or -
+            </div>
+            <div id="reverse_calc">
+                What is the best level to get
+                <select id="enchant">
+                    <option value="aquaaffinity">Aqua Affinity</option>
+                    <option value="boa">Bane of Arthropods</option>
+                    <option value="blastprot">Blast Protection</option>
+                    <option value="efficiency">Efficiency</option>
+                    <option value="featherfalling">Feather Falling</option>
+                    <option value="fireaspect">Fire Aspect</option>
+                    <option value="fireprot">Fire Protection</option>
+                    <option value="flame">Flame</option>
+                    <option value="fortune">Fortune</option>
+                    <option value="infinity">Infinity</option>
+                    <option value="knockback">Knockback</option>
+                    <option value="looting">Looting</option>
+                    <option value="luckofthesea">Luck of the Sea</option>
+                    <option value="lure">Lure</option>
+                    <option value="power">Power</option>
+                    <option value="projprot">Projectile Protection</option>
+                    <option value="protection">Protection</option>
+                    <option value="punch">Punch</option>
+                    <option value="respiration">Respiration</option>
+                    <option value="sharpness" selected="yes">Sharpness</option>
+                    <option value="silktouch">Silk Touch</option>
+                    <option value="smite">Smite</option>
+                    <option value="thorns">Thorns</option>
+                    <option value="unbreaking">Unbreaking</option>
+                </select>
+                <select id="enchlevel">
+                    <option value="1">I</option>
+                    <option value="2">II</option>
+                    <option value="3">III</option>
+                    <option value="4" selected="yes">IV</option>
+                    <option value="5">V</option>
+                </select>
+                <br />
+                on a
+                <select id="revmaterial">
+                    <option value="chain">Chain</option>
+                    <option value="diamond" selected="yes">Diamond</option>
+                    <option value="gold">Gold</option>
+                    <option value="iron">Iron</option>
+                    <option value="leather">Leather</option>
+                    <option value="stone">Stone</option>
+                    <option value="wood">Wood</option>
+                    <option value="book">Book</option>
+                </select>
+                <select id="revtool">
+                    <option value="axe">Axe</option>
+                    <option value="boots">Boots</option>
+                    <option value="bow">Bow</option>
+                    <option value="chestplate">Chest Plate</option>
+                    <option value="fishing rod">Fishing Rod</option>
+                    <option value="helmet">Helmet</option>
+                    <option value="leggings">Leggings</option>
+                    <option value="pickaxe">Pickaxe</option>
+                    <option value="shovel">Shovel</option>
+                    <option value="sword" selected="yes">Sword</option>
+                    <option value="book">(Book)</option>
+                </select>
+                ?
+                <input type="button" id="revcalc" value="Calculate..." />
+            </div>
+        </div>
+
+        <!-- Results area (populated by Javascript later) -->
+        <div id="result">
+        </div>
+
+        <!-- Footer with share links, info and copyright -->
+        <div id="otherstuff">
+            <!-- Footer info -->
+            <div id="contact">
+                All results are calculated using the algorithm described
+                <a href="http://www.minecraftwiki.net/wiki/Enchantment_Mechanics">here</a>.
+                <br />
+                <br />
+                Have a feature request?&nbsp;&nbsp;
+                <a href="http://www.twitter.com/ProtoMowsh">Tweet @ProtoMowsh</a>
+                <br />
+                <br />
+                View the uncompressed
+                <a href="https://github.com/Mowsh/Minecraft-Enchantment-Calculator">source code</a>
+                on github.
+            </div>
+            
+            <!-- Share links -->
+            <div id="gplus">
+                <!-- Google Plus -->
+                <g:plusone size="medium"></g:plusone>
+            </div>
+            <div id="twitter">
+                <!-- Twitter -->
+                <a href="https://twitter.com/share" class="twitter-share-button" data-via="ProtoMowsh">Tweet</a>
+                <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </div>
+            <div id="facebook">
+                <!-- Facebook -->
+                <div id="fb-root"></div>
+                <script>
+                    (function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (d.getElementById(id)) return;
+                        js = d.createElement(s); js.id = id;
+                        js.src = "//connect.facebook.net/en_GB/all.js#xfbml=1&appId=239673636079825";
+                        fjs.parentNode.insertBefore(js, fjs);
+                    }(document, 'script', 'facebook-jssdk'));
+                </script>
+                <div class="fb-like" data-href="http://www.minecraftenchantmentcalculator.com/" data-send="false" data-layout="button_count" data-width="450" data-show-faces="false" data-font="arial"></div>
+            </div>
+            <!-- Twitter follow button -->
+            <a href="https://twitter.com/ProtoMowsh" class="twitter-follow-button" data-show-count="false">Follow @ProtoMowsh</a>
+            <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            <br />
+            <br />
+            <!-- CC by-nc-sa license -->
+            <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/3.0/deed.en_US"><img alt="Creative Commons License" style="border-width:0" src="http://i.creativecommons.org/l/by-nc-sa/3.0/88x31.png" /></a>
+        </div>
+
+        <!-- Get Google's shared version of jQuery -->
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+        <!-- If Google is somehow down, download our local one instead -->
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.8.0.min.js"><\/script>')</script>
+        <!-- Google analytics tracking code (UA-27652939-1) -->
+        <script>
+            var _gaq=[['_setAccount','UA-27652939-1'],['_trackPageview']];
+            (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+        </script>
+        
+        <!-- Load calculator JS -->
+        <script src="../shared/js/shared.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
