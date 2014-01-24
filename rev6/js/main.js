@@ -16,6 +16,8 @@ var recordedEnchant = new Object();
 var endPrecision = 0;
 var numResultRows = 0;
 var guaranteedEnchant = "";
+var bestRevChance = 0;
+var bestRevLevel = 0;
 
 // onPageLoad
 $(function() {
@@ -224,6 +226,8 @@ $(function() {
             $("#result").html("");
             // Top info
             $("#result").html($("#result").html() + "<div class=\"info\">Calculated for Minecraft Snapshots 1.8<br />Enchantment simulated 10,000 times per level, but results may still vary.</div>");
+            // Result graph
+            $("#result").html($("#result").html() + "<canvas id=\"levelGraph\" width=\"1500\" height=\"200\"></canvas>");
             // Result table
             $("#result").html($("#result").html() + "Result:<br /><table id=\"resultTable\"><tr><td>Enchant</td><td>Probability</td></tr></table>");
             // Info
@@ -236,9 +240,11 @@ $(function() {
             $("#result").html($("#result").html() + "<input type=\"button\" id=\"calcback\" value=\"Back\" />");
             $("#link").val("http://www.minecraftenchantmentcalculator.com/" + revisionName + "/#" + getQuickCode(2));
             guaranteedEnchant = "";
+            bestRevChance = 0;
+            bestRevLevel = 0;
             revCalc ($("#enchant option:selected").text() + " " + $("#enchlevel option:selected").text(), $("#revmaterial").val(), $("#revtool").val());  // Run 2nd calculator and output to the output text area
             $("#link").click(function(){$("#link")[0].select();});  // Highlight entire link when the user clicks the text box
-            var newHeight = 400 + (numResultRows + 1) * 35;
+            var newHeight = 530 + (numResultRows + 1) * 35;
             $("#result").animate({
                 height: "" + newHeight + "px"
             }, 500, function() {
@@ -622,6 +628,30 @@ function addWeights (weight, newEnchant) {
 
 /*
 
+    Sets up the graph
+
+*/
+function setupGraph() {
+    var graphCanvas = $("#levelGraph")[0];
+    var graphContext = graphCanvas.getContext("2d");
+
+    // The canvas can be "reset" by updating its height or width
+    graphCanvas.width = graphCanvas.width;
+
+    // Draw the graph
+    graphContext.moveTo(0, 160);
+    graphContext.lineTo(1500, 160);
+    graphContext.strokeStyle = "#555";
+    graphContext.fillColor
+    graphContext.stroke();
+    graphContext.fillStyle = "#555";
+    graphContext.font = "22px Antic Slab";
+    graphContext.fillText("0", 0, 180);
+    graphContext.fillText("30", 1470, 180);
+}
+
+/*
+
     Runs calc once for every level, outputting the chance of getting enchantName for each level
 
 */
@@ -664,23 +694,62 @@ function revCalc (enchantName, mat, tool) {
         calc(mat, tool, level);
     }
 
+    setupGraph();
+
+    var graphCanvas = $("#levelGraph")[0];
+    var graphContext = graphCanvas.getContext("2d");
+    graphContext.fillStyle = "#666";
+    graphContext.moveTo(0, 160);
+    graphContext.beginPath();
+    graphContext.lineTo(0, 160);
+
     // Write each level to the output
     numResultRows = 0;
+    var currentLevel = 0;
     for (var index in recordedEnchant) {
+        currentLevel++;
         if(isNaN(recordedEnchant[index])) {
+            graphContext.lineTo(1500 / 29 * (currentLevel - 1), 160);
             continue;
         }
         if(recordedEnchant[index] < 0.1) {
+            graphContext.lineTo(1500 / 29 * (currentLevel - 1), 160);
             writeLineToOutput (index + ": <0.1%");
             addRow("" + index, "<0.1%");
             numResultRows++;
             continue;
         }
+        graphContext.lineTo(1500 / 29 * (currentLevel - 1), 160 - 160 * (recordedEnchant[index] / bestRevChance));
         recordedEnchant[index] = Math.floor(recordedEnchant[index] * 10)/10;  // Round percentages to two decimal places
         writeLineToOutput (index + ": " + recordedEnchant[index] + "%");
         addRow("" + index, "" + recordedEnchant[index] + "%");
         numResultRows++;
     }
+    graphContext.lineTo(1500, 160);
+    graphContext.closePath();
+    graphContext.fill();
+
+    // Place a line on the graph where the best level is
+    graphContext.strokeStyle = "#000";
+    graphContext.beginPath();
+    graphContext.lineWidth = 4;
+    graphContext.moveTo(1500 / 29 * (bestRevLevel - 1), 0);
+    graphContext.lineTo(1500 / 29 * (bestRevLevel - 1), 180);
+    graphContext.closePath();
+    graphContext.stroke();
+
+    var bestRevChanceRounded = Math.floor(bestRevChance * 10)/10;
+    var bestLevelTextPosition = 1500 / 29 * (bestRevLevel - 1);
+    var bestLevelString = "" + bestRevLevel + " - " + bestRevChanceRounded + "%";
+
+    // Make sure the text doesn't go off the edge of the canvas
+    if (bestLevelTextPosition > 1500 - (bestLevelString.length * 12)) {
+        bestLevelTextPosition = 1500 - (bestLevelString.length * 12);
+    }
+
+    graphContext.fillStyle = "#000";
+    graphContext.fillText("" + bestRevLevel + " - " + bestRevChanceRounded + "%", bestLevelTextPosition, 200);
+
     isRecordingEnchants = false;
 }
 
@@ -1333,5 +1402,9 @@ function calc(mat, tool, level) {
         }
     } else {
         recordedEnchant[level] = enchantsReceived[enchantWanted] / endPrecision * 100;
+        if (recordedEnchant[level] > bestRevChance) {
+            bestRevChance = recordedEnchant[level];
+            bestRevLevel = level;
+        }
     }
 }

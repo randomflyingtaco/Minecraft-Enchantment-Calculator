@@ -429,6 +429,13 @@ input {
     height: 20px;
 }
 
+#levelGraph {
+    display: block;
+    width: 750px;
+    height: 100px;
+    margin: 10px auto 0px auto;
+}
+
 
 /* ==========================================================================
    Helper classes
