@@ -548,7 +548,7 @@ function revCalc (enchantName, mat, tool) {
         if(isNaN(recordedEnchant[index])) {
             continue;
         }
-        if(recordedEnchant[index] == 0) {
+        if(recordedEnchant[index] < 0.1) {
             writeLineToOutput (index + ": <0.1%");
             addRow("" + index, "<0.1%");
             numResultRows++;
