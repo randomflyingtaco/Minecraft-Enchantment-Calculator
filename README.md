@@ -7,8 +7,3 @@ The site is live [here](http://minecraftenchantmentcalculator.com).  Feel free t
 The calculator is written using jQuery, and uses the algorithm described [here on the Minecraft Wiki](http://minecraft.gamepedia.com/Enchantment_Mechanics).
 
 I no longer accept donations for this project, however there is an official iOS app for the calculator [here](https://itunes.apple.com/us/app/enchantment-calculator-for/id763850739?ls=1&mt=8) if you're feeling generous!
-
-## Todo
-
-- Minecraft 1.8 support
-- Create a graph using HTML5 canvas like in the iOS app
