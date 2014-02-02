@@ -1145,7 +1145,7 @@ function calc(mat, tool, level) {
 
         // Write extra info such as chances of getting an extra enchant, and special item information
         if (tool != "book") {
-            var avglevel = level
+            var avglevel = level;
             writeLineToOutput ("");
             avglevel = avglevel / 2;
             writeLineToOutput ("You have a " + (avglevel + 1)/50*100 + "% chance of getting a 2nd enchant.");
