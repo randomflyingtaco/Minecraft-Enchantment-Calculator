@@ -30,6 +30,8 @@ $(function() {
             window.open("../rev4/index.html", "_self");
         } else if (version == "rev5") {
             window.open("../rev5/index.html", "_self");
+        } else if (version == "rev6") {
+            window.open("../rev6/index.html", "_self");
         }
     });
 });
