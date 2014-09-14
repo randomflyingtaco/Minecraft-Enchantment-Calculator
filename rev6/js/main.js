@@ -343,6 +343,7 @@ function updateGuaranteedEnchants() {
           "Aqua Affinity": "aquaaffinity",
           "Bane of Arthropods": "boa",
           "Blast Protection": "blastprot",
+          "Depth Strider": "depthstrider",
           "Efficiency": "efficiency",
           "Feather Falling": "featherfalling",
           "Fire Aspect": "fireaspect",
@@ -409,6 +410,7 @@ function updateGuaranteedEnchants() {
         };
     } else if (tool == "boots") {
         newOptions = {"(Unknown)": "",
+          "Depth Strider": "depthstrider",
           "Protection": "protection",
           "Fire Protection": "fireprot",
           "Projectile Protection": "projprot",
@@ -468,6 +470,7 @@ function updateEnchType () {
         newOptions = {"Aqua Affinity": "aquaaffinity",
           "Bane of Arthropods": "boa",
           "Blast Protection": "blastprot",
+          "Depth Strider": "depthstrider",
           "Efficiency": "efficiency",
           "Feather Falling": "featherfalling",
           "Fire Aspect": "fireaspect",
@@ -529,6 +532,7 @@ function updateEnchType () {
         };
     } else if (newEnchType == "boots") {
         newOptions = {"Protection": "protection",
+          "Depth Strider": "depthstrider",
           "Fire Protection": "fireprot",
           "Projectile Protection": "projprot",
           "Blast Protection": "blastprot",
@@ -584,7 +588,7 @@ function changeEnchLevels() {
           "II": "2",
           "I": "1"
         };
-    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns" || enchName == "luckofthesea" || enchName == "lure") {
+    } else if (enchName == "respiration" || enchName == "looting" || enchName == "unbreaking" || enchName == "fortune" || enchName == "thorns" || enchName == "luckofthesea" || enchName == "lure" || enchName == "depthstrider") {
         newLvOptions = {"III": "3",
           "II": "2",
           "I": "1"
@@ -1008,6 +1012,14 @@ function calc(mat, tool, level) {
                     addWeights(5, "Feather Falling II");
                 } else if (modifiedLevel >= 5 && modifiedLevel <= 15) {
                     addWeights(5, "Feather Falling I");
+                }
+
+                if (modifiedLevel >= 23 && modifiedLevel <= 33) {
+                    addWeights(5, "Depth Strider III");
+                } else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
+                    addWeights(5, "Depth Strider II");
+                } else if (modifiedLevel >= 11 && modifiedLevel <= 21) {
+                    addWeights(5, "Depth Strider I");
                 }
             }
 
