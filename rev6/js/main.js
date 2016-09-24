@@ -55,10 +55,14 @@ $(function() {
 
     /*
 
-        Function called when the main calculator's tool is changed, keeps tools and materials valid
+        Function called when the main calculator's tool or material is changed, keeps tools and materials valid
 
     */
     $("#tool").change(function(){
+        updateGuaranteedEnchants()
+    });
+    
+    $("#material").change(function(){
         updateGuaranteedEnchants()
     });
 
@@ -809,19 +813,19 @@ function calc(mat, tool, level) {
         possibleEnchants = new Array();
 
         // Randomisation which actually picks the enchant
-        modifiedLevel = parseInt(level) + Math.floor(Math.random() * (Math.floor(enchantability / 4) + 1)) + Math.floor(Math.random() * (Math.floor(enchantability / 4) + 1)) + 1;
+        modifiedLevel = parseInt(level) + Math.floor(Math.random() * enchantability / 4) + Math.floor(Math.random() * enchantability / 4) + 1;
         modifiedLevel = Math.floor(modifiedLevel * ((Math.random() + Math.random() - 1) * 0.15 + 1) + 0.5);
 
         // Depending on the modifiedLevel above, add enchants to the list of possible enchants a few times depending on the enchant's weight
 
         if (tool == "fishing rod") {
-            if (modifiedLevel >= 33 && modifiedLevel <= 70) {
+            if (modifiedLevel >= 33 && modifiedLevel <= 83) {
                 addWeights(1, "Lure III");
                 addWeights(1, "Luck of the Sea III");
-            } else if (modifiedLevel >= 24 && modifiedLevel <= 60) {
+            } else if (modifiedLevel >= 24 && modifiedLevel <= 74) {
                 addWeights(1, "Lure II");
                 addWeights(1, "Luck of the Sea II");
-            } else if (modifiedLevel >= 15 && modifiedLevel <= 50) {
+            } else if (modifiedLevel >= 15 && modifiedLevel <= 65) {
                 addWeights(1, "Lure I");
                 addWeights(1, "Luck of the Sea I");
             }
@@ -853,8 +857,8 @@ function calc(mat, tool, level) {
             }
 
             if (modifiedLevel >= 20 && modifiedLevel <= 50) {
-                addWeights(1, "Infinity I");
-                addWeights(2, "Flame I");
+                addWeights(1, "Infinity");
+                addWeights(2, "Flame");
             }
 
             if (modifiedLevel >= 21 && modifiedLevel <= 71) {
@@ -878,7 +882,7 @@ function calc(mat, tool, level) {
             }
 
             if (modifiedLevel >= 15 && modifiedLevel <= 65) {
-                addWeights(1, "Silk Touch I");
+                addWeights(1, "Silk Touch");
             }
 
             if (modifiedLevel >= 21 && modifiedLevel <= 71) {
@@ -1014,11 +1018,11 @@ function calc(mat, tool, level) {
                     addWeights(5, "Feather Falling I");
                 }
 
-                if (modifiedLevel >= 23 && modifiedLevel <= 33) {
+                if (modifiedLevel >= 30 && modifiedLevel <= 45) {
                     addWeights(5, "Depth Strider III");
-                } else if (modifiedLevel >= 17 && modifiedLevel <= 27) {
+                } else if (modifiedLevel >= 20 && modifiedLevel <= 35) {
                     addWeights(5, "Depth Strider II");
-                } else if (modifiedLevel >= 11 && modifiedLevel <= 21) {
+                } else if (modifiedLevel >= 10 && modifiedLevel <= 25) {
                     addWeights(5, "Depth Strider I");
                 }
             }
@@ -1033,7 +1037,7 @@ function calc(mat, tool, level) {
                 }
 
                 if (modifiedLevel >= 1 && modifiedLevel <= 41) {
-                    addWeights(2, "Aqua Affinity I");
+                    addWeights(2, "Aqua Affinity");
                 }
             }
 
@@ -1065,7 +1069,7 @@ function calc(mat, tool, level) {
             }
 
             if (modifiedLevel >= 1 && modifiedLevel <= 41) {
-                addWeights(2, "Aqua Affinity I");
+                addWeights(2, "Aqua Affinity");
             }
 
             if (modifiedLevel >= 23 && modifiedLevel <= 33) {
@@ -1180,7 +1184,7 @@ function calc(mat, tool, level) {
             }
 
             if (modifiedLevel >= 15 && modifiedLevel <= 65) {
-                addWeights(1, "Silk Touch I");
+                addWeights(1, "Silk Touch");
             }
 
             if (modifiedLevel >= 21 && modifiedLevel <= 71) {
@@ -1218,16 +1222,8 @@ function calc(mat, tool, level) {
             }
 
             if (modifiedLevel >= 20 && modifiedLevel <= 50) {
-                addWeights(1, "Infinity I");
-                addWeights(2, "Flame I");
-            }
-            
-            if (modifiedLevel >= 21 && modifiedLevel <= 71) {
-                addWeights(5, "Unbreaking III");
-            } else if (modifiedLevel >= 13 && modifiedLevel <= 63) {
-                addWeights(5, "Unbreaking II");
-            } else if (modifiedLevel >= 5 && modifiedLevel <= 55) {
-                addWeights(5, "Unbreaking I");
+                addWeights(1, "Infinity");
+                addWeights(2, "Flame");
             }
 
             if (modifiedLevel >= 33 && modifiedLevel <= 83) {
